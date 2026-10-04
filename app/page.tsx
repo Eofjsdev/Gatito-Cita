@@ -200,6 +200,14 @@ export default function HomePage() {
   }, [answers]);
 
   useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register(`${BASE_PATH}/sw.js`, { scope: `${BASE_PATH}/` })
+        .catch((error) => console.error('Error registrando el service worker:', error));
+    }
+  }, []);
+
+  useEffect(() => {
     if (showFinale) {
       spawnCats();
     }
@@ -283,11 +291,15 @@ export default function HomePage() {
     try {
       const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a5' });
       const imgWidth = 148;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-     pdf.addPage([imgWidth, Math.max(imgHeight, 210)]); pdf.deletePage(1);
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight); 
+      // La página se ajusta a la altura del contenido para que no se corte
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [imgWidth, Math.max(imgHeight, 210)],
+      });
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save('cita-confirmada.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
