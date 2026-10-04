@@ -286,7 +286,8 @@ export default function HomePage() {
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a5' });
       const imgWidth = 148;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+     pdf.addPage([imgWidth, Math.max(imgHeight, 210)]); pdf.deletePage(1);
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight); 
       pdf.save('cita-confirmada.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
