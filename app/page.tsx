@@ -59,60 +59,60 @@ const QUESTION_BANK: Question[] = [
   {"id": 46, "key": "respaldos", "icon": "💾", "tag": "// módulo: respaldos.exe", "text": "¿Haces copias de seguridad?", "options": ["☁️ Automáticas, en la nube", "💽 A mano, cada tanto", "🤞 No, confío en la suerte", "😰 Solo después de perder algo"]},
   {"id": 47, "key": "dispositivo_extra", "icon": "🔌", "tag": "// módulo: dispositivo_extra.exe", "text": "¿Qué gadget no puede faltar?", "options": ["🎧 Audífonos con cancelación", "🖱️ Un buen mouse", "🔋 Un cargador, siempre", "📱 Mi celular de respaldo"]},
   {"id": 48, "key": "bateria", "icon": "🔋", "tag": "// módulo: bateria.exe", "text": "La batería de tu laptop casi siempre está...", "options": ["🟢 Llena, cargo a diario", "🟡 A la mitad", "🔴 Al uno por ciento", "🔌 Conectada, nunca la desenchufo"]},
-  {"id": 49, "key": "wifi", "icon": "📶", "tag": "// módulo: wifi.exe", "text": "Si se cae el wifi en plena cita, tú...", "options": ["📱 Comparto datos del celular", "🧘 Aprovecho para platicar", "😱 Entro en pánico tech", "🔧 Reinicio el router yo mismo"]},
-  {"id": 50, "key": "viaje_tech", "icon": "🌍", "tag": "// módulo: viaje_tech.exe", "text": "¿A qué evento tech te gustaría ir juntos?", "options": ["🎤 Una conferencia de desarrolladores", "🏆 Un hackathon", "🎮 Una convención de videojuegos", "🚀 Un lanzamiento de producto"]},
-  {"id": 51, "key": "videojuegos", "icon": "🎮", "tag": "// módulo: videojuegos.exe", "text": "¿Qué tipo de videojuegos te gustan?", "options": ["🧩 Puzzles y estrategia", "⚔️ Aventura y rol", "🏁 Carreras o deportes", "🎲 Los de mesa y cooperativos"]},
-  {"id": 52, "key": "serie_tech", "icon": "📺", "tag": "// módulo: serie_tech.exe", "text": "¿Qué serie o película tech verías en pareja?", "options": ["🤖 Una de inteligencia artificial", "🕵️ Una de hackers", "🚀 Ciencia ficción espacial", "😂 Una comedia de programadores"]},
-  {"id": 53, "key": "peliculas_noche", "icon": "🎬", "tag": "// módulo: peliculas_noche.exe", "text": "Para una noche de películas elegimos...", "options": ["🍿 Ciencia ficción", "😂 Comedia ligera", "🧠 Un thriller que te rompa la cabeza", "💞 Una romántica, sin juzgar"]},
-  {"id": 54, "key": "juegos_mesa", "icon": "🎲", "tag": "// módulo: juegos_mesa.exe", "text": "Si jugamos algo en la cita, que sea...", "options": ["♟️ Ajedrez", "🃏 Cartas", "🎮 Videojuegos cooperativos", "🧩 Un escape room"]},
-  {"id": 55, "key": "libro_dev", "icon": "📖", "tag": "// módulo: libro_dev.exe", "text": "¿Qué libro de programación recomiendas?", "options": ["📘 Clean Code", "🧠 El programador pragmático", "🏛️ Patrones de diseño", "📕 Ninguno, leo otra cosa"]},
-  {"id": 56, "key": "aprendizaje", "icon": "🎓", "tag": "// módulo: aprendizaje.exe", "text": "Para aprender algo nuevo, prefieres...", "options": ["🎥 Videos y tutoriales", "📚 Documentación y libros", "🛠️ Hacer proyectos reales", "👥 Preguntarle a alguien que sepa"]},
-  {"id": 57, "key": "habilidad_oculta", "icon": "🧠", "tag": "// módulo: habilidad_oculta.exe", "text": "¿Cuál es tu superpoder fuera del código?", "options": ["🍳 Cocinar", "🎸 Tocar un instrumento", "🏃 Hacer deporte", "🎨 Dibujar o diseñar"]},
-  {"id": 58, "key": "ejercicio", "icon": "🏋️", "tag": "// módulo: ejercicio.exe", "text": "¿Haces ejercicio entre tanto código?", "options": ["🏃 Sí, casi todos los días", "🧘 Estiramientos de vez en cuando", "🪑 Mi cardio es subir la escalera", "🙃 El ejercicio es girar la silla"]},
-  {"id": 59, "key": "sueno", "icon": "😴", "tag": "// módulo: sueno.exe", "text": "Tu horario de sueño es...", "options": ["🛌 Ocho horas, bien dormido", "🧟 Cuatro y mucho café", "🦉 Búho nocturno", "🐓 Madrugador de corazón"]},
-  {"id": 60, "key": "descanso", "icon": "🧘", "tag": "// módulo: descanso.exe", "text": "Para descansar de la pantalla prefieres...", "options": ["🌳 Salir a caminar", "📚 Leer algo en papel", "🎶 Escuchar música", "📱 Cambiar de pantalla, ja"]},
-  {"id": 61, "key": "comida_favorita", "icon": "🍔", "tag": "// módulo: comida_favorita.exe", "text": "Tu comida reconfortante es...", "options": ["🍝 Pasta", "🍔 Hamburguesa", "🌮 Tacos", "🍣 Sushi"]},
-  {"id": 62, "key": "postre", "icon": "🍰", "tag": "// módulo: postre.exe", "text": "¿Qué postre pedimos?", "options": ["🍫 Algo de chocolate", "🍨 Helado", "🍰 Pastel", "🍓 Fruta, para sentirnos sanos"]},
-  {"id": 63, "key": "bebida_cita", "icon": "🧋", "tag": "// módulo: bebida_cita.exe", "text": "Para brindar en la cita pedimos...", "options": ["☕ Un café especial", "🧋 Una boba", "🍹 Algo con alcohol", "🥤 Un jugo o refresco"]},
-  {"id": 64, "key": "lugar_cita", "icon": "🌆", "tag": "// módulo: lugar_cita.exe", "text": "¿Dónde sería la cita perfecta?", "options": ["🌳 Un parque tranquilo", "🏙️ Un mirador de la ciudad", "🏛️ Un museo", "🎡 Un lugar de juegos"]},
-  {"id": 65, "key": "viaje", "icon": "🏖️", "tag": "// módulo: viaje.exe", "text": "Si pudiéramos viajar a cualquier lado, iríamos a...", "options": ["🗼 Japón, ciudad de tecnología", "🏔️ Las montañas", "🏖️ La playa", "🌎 Una ciudad que no conozcamos"]},
-  {"id": 66, "key": "regalo", "icon": "🎁", "tag": "// módulo: regalo.exe", "text": "Un buen regalo para ti sería...", "options": ["🎧 Unos audífonos", "⌨️ Un teclado nuevo", "📚 Un libro", "🍫 Algo dulce, siempre"]},
-  {"id": 67, "key": "detalle", "icon": "💌", "tag": "// módulo: detalle.exe", "text": "¿Cómo prefieres que nos mensajeemos?", "options": ["💬 Texto, rapidísimo", "🎤 Notas de voz", "📞 Llamadas", "💌 Cartas, a la antigua"]},
-  {"id": 68, "key": "red_social", "icon": "📱", "tag": "// módulo: red_social.exe", "text": "¿Cuál es tu red social favorita?", "options": ["📸 Instagram", "🎵 TikTok", "🐦 X o Twitter", "💼 LinkedIn, soy serio"]},
-  {"id": 69, "key": "fotos", "icon": "📸", "tag": "// módulo: fotos.exe", "text": "¿Nos tomamos una foto en la cita?", "options": ["📷 Sí, selfie juntos", "🎞️ Una más artística", "🙈 Mejor no, soy tímido", "📹 Un video corto"]},
-  {"id": 70, "key": "animal_favorito", "icon": "🐶", "tag": "// módulo: animal_favorito.exe", "text": "¿Qué animal te gusta más?", "options": ["🐱 Gatos, por supuesto", "🐶 Perros", "🦊 Zorros", "🐙 Pulpos, por inteligentes"]},
-  {"id": 71, "key": "clima", "icon": "🌧️", "tag": "// módulo: clima.exe", "text": "El clima ideal para una cita sería...", "options": ["☀️ Soleado y calentito", "🌧️ Lluvia y café", "🌙 Noche despejada", "☁️ Nublado, sin drama"]},
-  {"id": 72, "key": "genero_musical", "icon": "🎵", "tag": "// módulo: genero_musical.exe", "text": "¿Qué música ponemos en la cita?", "options": ["🎶 Pop", "🎸 Rock", "🎷 Jazz o lo-fi", "🎤 Lo que se escuche en la radio"]},
-  {"id": 73, "key": "retro", "icon": "🕹️", "tag": "// módulo: retro.exe", "text": "¿Qué consola o juego retro te gusta?", "options": ["🍄 Nintendo y Mario", "🔵 Sonic y Sega", "🕹️ Arcade clásico", "👾 Juegos de 8 bits"]},
-  {"id": 74, "key": "acertijo", "icon": "🧩", "tag": "// módulo: acertijo.exe", "text": "Para romper el hielo, ¿qué prefieres?", "options": ["🧮 Un acertijo lógico", "😂 Un chiste de programadores", "🎲 Un juego de preguntas", "🤐 Un silencio cómodo"]},
-  {"id": 75, "key": "espacio", "icon": "🌌", "tag": "// módulo: espacio.exe", "text": "¿Qué opinas del espacio y las estrellas?", "options": ["🔭 Me fascinan", "🚀 Quiero ir a Marte", "🌙 Me gusta mirarlas de noche", "📺 Prefiero verlas en documentales"]},
-  {"id": 76, "key": "robots", "icon": "🤖", "tag": "// módulo: robots.exe", "text": "Si tuvieras un robot, ¿qué haría por ti?", "options": ["🧹 Las tareas de la casa", "🍳 Cocinar", "💻 Programar mis bugs", "🎮 Jugar conmigo"]},
-  {"id": 77, "key": "futuro", "icon": "🕶️", "tag": "// módulo: futuro.exe", "text": "En diez años te imaginas...", "options": ["🏢 Con mi propia empresa", "🌍 Viajando y programando", "🏠 En una casita tranquila", "🚀 Creando algo gigante"]},
-  {"id": 78, "key": "trabajo_ideal", "icon": "🧑‍🚀", "tag": "// módulo: trabajo_ideal.exe", "text": "Tu trabajo soñado sería...", "options": ["🎮 En una empresa de videojuegos", "🚀 En una startup", "🔒 En ciberseguridad", "🎓 Enseñando a programar"]},
-  {"id": 79, "key": "estres", "icon": "🧯", "tag": "// módulo: estres.exe", "text": "Cuando algo explota en producción, tú...", "options": ["🧘 Mantengo la calma", "🏃 Corro al teclado", "📞 Llamo a medio equipo", "🙈 Finjo que no vi nada"]},
-  {"id": 80, "key": "meta", "icon": "🎯", "tag": "// módulo: meta.exe", "text": "¿Cuál es tu meta de este año?", "options": ["📈 Mejorar mi código", "💰 Crecer mi proyecto", "🌎 Viajar más", "❤️ Pasar más tiempo con quien quiero"]},
-  {"id": 81, "key": "meme_dev", "icon": "😂", "tag": "// módulo: meme_dev.exe", "text": "¿Qué meme de programadores te representa?", "options": ["🔥 Esto está bien (todo se quema)", "🤷 En mi máquina funciona", "🌀 Programando a las 3 AM", "🦆 El patito de goma"]},
-  {"id": 82, "key": "podcast", "icon": "🎤", "tag": "// módulo: podcast.exe", "text": "¿Qué prefieres escuchar de tecnología?", "options": ["🎙️ Podcasts", "📺 Videos de YouTube", "📰 Blogs y noticias", "📚 Libros"]},
-  {"id": 83, "key": "compras", "icon": "🛒", "tag": "// módulo: compras.exe", "text": "Tu compra tech favorita siempre es...", "options": ["⌨️ Periféricos", "🎧 Audio", "💻 Una laptop nueva", "🔌 Cables y adaptadores que nunca sobran"]},
-  {"id": 84, "key": "agenda", "icon": "📅", "tag": "// módulo: agenda.exe", "text": "¿Cómo organizas tus tareas?", "options": ["📋 Con una app de tareas", "📝 En papel", "🧠 Todo en la cabeza", "🔔 Con alarmas por todos lados"]},
-  {"id": 85, "key": "madrugada", "icon": "🌅", "tag": "// módulo: madrugada.exe", "text": "¿Un amanecer o un atardecer?", "options": ["🌅 Amanecer, tranquilo y nuevo", "🌇 Atardecer, más romántico", "🌌 La noche entera", "⛅ Los dos, no escojo"]},
-  {"id": 86, "key": "plan_casa", "icon": "🛋️", "tag": "// módulo: plan_casa.exe", "text": "Un plan en casa perfecto sería...", "options": ["🍿 Películas y manta", "🎮 Videojuegos juntos", "🍳 Cocinar algo rico", "💻 Programar algo juntos"]},
-  {"id": 87, "key": "transporte", "icon": "🚲", "tag": "// módulo: transporte.exe", "text": "¿Cómo nos movemos a la cita?", "options": ["🚗 En carro", "🚌 En transporte público", "🚲 En bici", "🚶 A pie, con calma"]},
-  {"id": 88, "key": "comida_picante", "icon": "🌮", "tag": "// módulo: comida_picante.exe", "text": "¿Cuánto picante aguantas?", "options": ["🔥 Todo, soy de hierro", "🌶️ Un poco", "🧊 Cero, soy sensible", "🥵 Pido y me arrepiento"]},
-  {"id": 89, "key": "orden", "icon": "🧺", "tag": "// módulo: orden.exe", "text": "Tu escritorio normalmente está...", "options": ["✨ Impecable", "📚 Con cosas encima", "🌪️ Un caos organizado", "🥤 Con vasos y tazas por todos lados"]},
-  {"id": 90, "key": "habito_lectura", "icon": "📖", "tag": "// módulo: habito_lectura.exe", "text": "¿Lees por gusto?", "options": ["📚 Sí, todo el tiempo", "📰 Solo noticias", "📖 De vez en cuando", "🙈 Leo más código que libros"]},
-  {"id": 91, "key": "proyecto_lado", "icon": "🛠️", "tag": "// módulo: proyecto_lado.exe", "text": "Un proyecto personal que te gustaría crear es...", "options": ["🎮 Un videojuego", "🌐 Una app útil", "🤖 Un bot o una IA", "📱 Algo para mi pareja"]},
-  {"id": 92, "key": "logro", "icon": "🏆", "tag": "// módulo: logro.exe", "text": "Tu mayor orgullo programando fue...", "options": ["🚀 Publicar mi primer proyecto", "🐛 Resolver un bug imposible", "🎓 Aprender sin ayuda", "🤝 Ayudar a alguien a aprender"]},
-  {"id": 93, "key": "pasion", "icon": "🔥", "tag": "// módulo: pasion.exe", "text": "Lo que más te apasiona del código es...", "options": ["🎨 Crear cosas desde cero", "🧩 Resolver problemas", "⚙️ Automatizar todo", "🌍 Que lo use mucha gente"]},
-  {"id": 94, "key": "puntualidad", "icon": "🕰️", "tag": "// módulo: puntualidad.exe", "text": "Para una cita, tú llegas...", "options": ["⏰ Diez minutos antes", "🕐 Justo a tiempo", "⌛ Un poquito tarde", "🏃 Corriendo con mil disculpas"]},
-  {"id": 95, "key": "estilo", "icon": "🧢", "tag": "// módulo: estilo.exe", "text": "Para la cita, tu estilo sería...", "options": ["👕 Una camiseta de programador", "👔 Elegante", "🧥 Casual y cómodo", "🎩 Algo sorpresa"]},
-  {"id": 96, "key": "conversacion", "icon": "🌙", "tag": "// módulo: conversacion.exe", "text": "¿De qué hablamos en la cita?", "options": ["💻 De tecnología", "🎮 De juegos y series", "🌍 De sueños y viajes", "🤷 De todo un poco"]},
-  {"id": 97, "key": "dulce_salado", "icon": "🧁", "tag": "// módulo: dulce_salado.exe", "text": "¿Dulce o salado?", "options": ["🍬 Dulce, siempre", "🧂 Salado", "🥨 Mitad y mitad", "🍟 Lo que sea, tengo hambre"]},
-  {"id": 98, "key": "color", "icon": "🎨", "tag": "// módulo: color.exe", "text": "¿Cuál es tu color favorito?", "options": ["💜 Morado", "💙 Azul", "💚 Verde", "🖤 Negro, como mi terminal"]},
-  {"id": 99, "key": "numero_suerte", "icon": "🔢", "tag": "// módulo: numero_suerte.exe", "text": "¿Cuál es tu número de la suerte?", "options": ["0️⃣ El cero, soy programador", "1️⃣ El uno, bit encendido", "4️⃣ El cuatro, como los errores 404", "🔢 El 42, la respuesta a todo"]},
-  {"id": 100, "key": "senal", "icon": "📡", "tag": "// módulo: senal.exe", "text": "Si fueras una tecnología serías...", "options": ["📶 Wifi, siempre conectado", "🔋 Una batería de larga duración", "☁️ La nube, siempre disponible", "🤖 Una IA, siempre aprendiendo"]},
-  {"id": 101, "key": "frecuencia", "icon": "🗓️", "tag": "// módulo: frecuencia.exe", "text": "¿Cada cuánto nos vemos si sale bien la cita?", "options": ["📆 Todas las semanas", "🗓️ Un par de veces al mes", "🎉 Cuando haya un plan genial", "💬 Hablamos a diario y vemos"]},
-  {"id": 102, "key": "final", "icon": "💝", "tag": "// módulo: final.exe", "text": "Para terminar... ¿cómo te fue en esta cita?", "options": ["💜 Perfecta, quiero otra", "😊 Muy bien, nos repetimos", "🤔 Déjame pensarlo", "🐱 Solo vine por los gatitos"]},
+  {"id": 49, "key": "libro_dev", "icon": "📖", "tag": "// módulo: libro_dev.exe", "text": "¿Qué libro de programación recomiendas?", "options": ["📘 Clean Code", "🧠 El programador pragmático", "🏛️ Patrones de diseño", "📕 Ninguno, leo otra cosa"]},
+  {"id": 50, "key": "aprendizaje", "icon": "🎓", "tag": "// módulo: aprendizaje.exe", "text": "Para aprender algo nuevo, prefieres...", "options": ["🎥 Videos y tutoriales", "📚 Documentación y libros", "🛠️ Hacer proyectos reales", "👥 Preguntarle a alguien que sepa"]},
+  {"id": 51, "key": "trabajo_ideal", "icon": "🧑‍🚀", "tag": "// módulo: trabajo_ideal.exe", "text": "Tu trabajo soñado sería...", "options": ["🎮 En una empresa de videojuegos", "🚀 En una startup", "🔒 En ciberseguridad", "🎓 Enseñando a programar"]},
+  {"id": 52, "key": "estres", "icon": "🧯", "tag": "// módulo: estres.exe", "text": "Cuando algo explota en producción, tú...", "options": ["🧘 Mantengo la calma", "🏃 Corro al teclado", "📞 Llamo a medio equipo", "🙈 Finjo que no vi nada"]},
+  {"id": 53, "key": "meme_dev", "icon": "😂", "tag": "// módulo: meme_dev.exe", "text": "¿Qué meme de programadores te representa?", "options": ["🔥 Esto está bien (todo se quema)", "🤷 En mi máquina funciona", "🌀 Programando a las 3 AM", "🦆 El patito de goma"]},
+  {"id": 54, "key": "podcast", "icon": "🎤", "tag": "// módulo: podcast.exe", "text": "¿Qué prefieres escuchar de tecnología?", "options": ["🎙️ Podcasts", "📺 Videos de YouTube", "📰 Blogs y noticias", "📚 Libros"]},
+  {"id": 55, "key": "compras", "icon": "🛒", "tag": "// módulo: compras.exe", "text": "Tu compra tech favorita siempre es...", "options": ["⌨️ Periféricos", "🎧 Audio", "💻 Una laptop nueva", "🔌 Cables y adaptadores que nunca sobran"]},
+  {"id": 56, "key": "proyecto_lado", "icon": "🛠️", "tag": "// módulo: proyecto_lado.exe", "text": "Un proyecto personal que te gustaría crear es...", "options": ["🎮 Un videojuego", "🌐 Una app útil", "🤖 Un bot o una IA", "📱 Algo para mi pareja"]},
+  {"id": 57, "key": "logro", "icon": "🏆", "tag": "// módulo: logro.exe", "text": "Tu mayor orgullo programando fue...", "options": ["🚀 Publicar mi primer proyecto", "🐛 Resolver un bug imposible", "🎓 Aprender sin ayuda", "🤝 Ayudar a alguien a aprender"]},
+  {"id": 58, "key": "pasion", "icon": "🔥", "tag": "// módulo: pasion.exe", "text": "Lo que más te apasiona del código es...", "options": ["🎨 Crear cosas desde cero", "🧩 Resolver problemas", "⚙️ Automatizar todo", "🌍 Que lo use mucha gente"]},
+  {"id": 59, "key": "docker", "icon": "🐳", "tag": "// módulo: docker.exe", "text": "¿Qué opinas de Docker?", "options": ["🐳 Lo uso para todo, un contenedor por cosa", "📦 Sé lo básico y me alcanza", "😵 Mi imagen pesa más que mi laptop", "🙅 Prefiero instalar directo"]},
+  {"id": 60, "key": "apis", "icon": "🔌", "tag": "// módulo: apis.exe", "text": "Cuando consumes una API, lo primero que haces es...", "options": ["📖 Leer la documentación completa", "🧪 Probar con Postman a ver qué sale", "🙏 Copiar el ejemplo y rezar", "🔍 Ver qué manda el navegador"]},
+  {"id": 61, "key": "algoritmos", "icon": "🧮", "tag": "// módulo: algoritmos.exe", "text": "Los algoritmos para ti son...", "options": ["❤️ Mi parte favorita de programar", "😅 Los sufrí en la universidad", "🧠 Solo los que necesito", "🚫 Que los resuelva la librería"]},
+  {"id": 62, "key": "leetcode", "icon": "🏆", "tag": "// módulo: leetcode.exe", "text": "¿Practicas problemas tipo LeetCode?", "options": ["🏆 Todos los días, soy de ranking", "📅 De vez en cuando, antes de entrevistas", "😴 Intenté una vez y me dormí", "🙈 Eso es para otros"]},
+  {"id": 63, "key": "recursion", "icon": "🔁", "tag": "// módulo: recursion.exe", "text": "Para explicar la recursión, tú dirías...", "options": ["🔁 Ver «recursión»", "🪞 Dos espejos frente a frente", "🧅 Una cebolla de funciones", "💥 Hasta que se acaba la pila"]},
+  {"id": 64, "key": "big_o", "icon": "⏳", "tag": "// módulo: big_o.exe", "text": "Si tu relación fuera un algoritmo, sería...", "options": ["⚡ O(1), instantánea", "📈 O(n), crece contigo", "🐢 O(n²), con calma", "♾️ Un bucle infinito (de cariño)"]},
+  {"id": 65, "key": "sql_joins", "icon": "🗃️", "tag": "// módulo: sql_joins.exe", "text": "En SQL, el JOIN que más usas es...", "options": ["🤝 INNER JOIN, solo lo que coincide", "⬅️ LEFT JOIN, para no perder nada", "🔀 FULL JOIN, todos incluidos", "🙊 SELECT * y ya, no pregunten"]},
+  {"id": 66, "key": "regex", "icon": "🧵", "tag": "// módulo: regex.exe", "text": "Las expresiones regulares te parecen...", "options": ["🧙 Magia pura, las domino", "😵 Un conjuro que olvido siempre", "🔍 Las busco cada vez", "🚫 Las evito a toda costa"]},
+  {"id": 67, "key": "centrar_div", "icon": "🎯", "tag": "// módulo: centrar_div.exe", "text": "Centrar un div es...", "options": ["😎 Flexbox y listo", "🧩 Grid, soy moderno", "😭 Todavía me cuesta", "🪄 margin: auto, a la antigua"]},
+  {"id": 68, "key": "front_back", "icon": "🎨", "tag": "// módulo: front_back.exe", "text": "Entre frontend y backend, prefieres...", "options": ["🎨 Frontend, me gusta lo visual", "⚙️ Backend, la lógica es lo mío", "🔄 Full stack, de todo un poco", "🗄️ Bases de datos y nada más"]},
+  {"id": 69, "key": "cicd", "icon": "🚦", "tag": "// módulo: cicd.exe", "text": "El pipeline de CI/CD de tu proyecto es...", "options": ["✅ Automático y con todos los tests", "🔧 Medio armado, lo arreglo luego", "🚀 Subo y que Dios diga", "📭 No tengo, subo a mano"]},
+  {"id": 70, "key": "nube", "icon": "☁️", "tag": "// módulo: nube.exe", "text": "Para alojar tus proyectos usas...", "options": ["☁️ AWS, Google Cloud o Azure", "▲ Vercel o Netlify, lo fácil", "🏠 Mi propio servidor en casa", "🆓 GitHub Pages, que sea gratis"]},
+  {"id": 71, "key": "monolito", "icon": "🧱", "tag": "// módulo: monolito.exe", "text": "Entre monolito y microservicios, tú eres...", "options": ["🏛️ Monolito, todo junto y simple", "🧩 Microservicios, cada cosa aparte", "⚖️ Un monolito modular, el término medio", "🤷 El que no se meta en eso"]},
+  {"id": 72, "key": "open_source", "icon": "🌍", "tag": "// módulo: open_source.exe", "text": "El código abierto para ti es...", "options": ["❤️ Lo mejor de la comunidad", "🤝 Contribuyo cuando puedo", "👀 Lo uso, pero no aporto", "📜 Me importa mucho la licencia"]},
+  {"id": 73, "key": "code_review", "icon": "👀", "tag": "// módulo: code_review.exe", "text": "Cuando te hacen code review, tú...", "options": ["🙏 Agradezco cada comentario", "😤 Me defiendo hasta el final", "😰 Me da un poquito de miedo", "✅ Aprendo y lo aplico"]},
+  {"id": 74, "key": "pair_programming", "icon": "👯", "tag": "// módulo: pair_programming.exe", "text": "Programar en pareja, ¿cómo lo ves?", "options": ["💞 Genial, aprendo muchísimo", "😅 Me pongo nervioso, me ven", "🧑‍🏫 Prefiero explicar yo", "🎧 Mejor cada quien en lo suyo"]},
+  {"id": 75, "key": "agile", "icon": "📋", "tag": "// módulo: agile.exe", "text": "En las reuniones tipo stand-up, tú...", "options": ["⏱️ Resumo en un minuto", "🗣️ Hablo de más", "😴 Espero que termine pronto", "📝 Llevo todo anotado"]},
+  {"id": 76, "key": "deuda_tecnica", "icon": "🏚️", "tag": "// módulo: deuda_tecnica.exe", "text": "La deuda técnica de tus proyectos es...", "options": ["💎 Casi nula, todo limpio", "📉 Manejable, la pago poco a poco", "🌋 Un volcán a punto de explotar", "🙈 Prefiero no mirarla"]},
+  {"id": 77, "key": "spaghetti", "icon": "🍝", "tag": "// módulo: spaghetti.exe", "text": "Ante el código spaghetti heredado, tú...", "options": ["🧹 Lo limpio con paciencia", "🔥 Lo reescribo desde cero", "😵 Lo dejo como está y me alejo", "📜 Agrego un TODO y sigo"]},
+  {"id": 78, "key": "versionado", "icon": "🏷️", "tag": "// módulo: versionado.exe", "text": "Para numerar tus versiones usas...", "options": ["🔢 Versionado semántico, bien ordenado", "🎲 v1, v2, v_final, v_final_ahora_si", "📅 La fecha de hoy", "🙃 No versiono, solo guardo"]},
+  {"id": 79, "key": "terminal", "icon": "🖥️", "tag": "// módulo: terminal.exe", "text": "Tu relación con la terminal es...", "options": ["⌨️ Vivo ahí, uso todo con comandos", "🪟 Solo lo básico, lo demás con ratón", "😬 Me da respeto escribir comandos", "🎨 La tengo con un tema precioso"]},
+  {"id": 80, "key": "alias", "icon": "📟", "tag": "// módulo: alias.exe", "text": "Tus alias y atajos en la terminal son...", "options": ["⚡ Un montón, ahorro cada tecla", "📝 Uno o dos útiles", "🙅 Ninguno, escribo todo", "🤖 Los dejé a mi script"]},
+  {"id": 81, "key": "tema_editor", "icon": "🌈", "tag": "// módulo: tema_editor.exe", "text": "¿Qué tema de color usas en tu editor?", "options": ["🧛 Dracula, el rey", "🌑 Algún oscuro minimalista", "☀️ Uno claro, soy rebelde", "🎨 El que traiga por defecto"]},
+  {"id": 82, "key": "fuente", "icon": "🔤", "tag": "// módulo: fuente.exe", "text": "¿Qué fuente usas para programar?", "options": ["🔤 Fira Code, con sus ligaduras", "🧱 JetBrains Mono", "📟 La que venga, no me importa", "✨ Alguna rara que nadie conoce"]},
+  {"id": 83, "key": "ssh", "icon": "🔑", "tag": "// módulo: ssh.exe", "text": "Las llaves SSH para ti son...", "options": ["🗝️ Las tengo ordenadas y con respaldo", "🤷 Las generé una vez y se perdieron", "😰 Me da miedo tocarlas", "📋 Copio la misma a todo"]},
+  {"id": 84, "key": "seguridad", "icon": "🛡️", "tag": "// módulo: seguridad.exe", "text": "En ciberseguridad, tú eres...", "options": ["🕵️ Curioso, me gusta romper cosas (éticamente)", "🔐 Cuido mucho mis datos", "🙈 Prefiero no pensar en eso", "📚 Estoy aprendiendo"]},
+  {"id": 85, "key": "blockchain", "icon": "⛓️", "tag": "// módulo: blockchain.exe", "text": "El blockchain y las criptomonedas te parecen...", "options": ["🚀 El futuro", "🤔 Interesante, pero con cuidado", "📉 Demasiado ruido", "🙅 Cero interés"]},
+  {"id": 86, "key": "machine_learning", "icon": "🧠", "tag": "// módulo: machine_learning.exe", "text": "El aprendizaje automático (ML) para ti es...", "options": ["🤩 Mi tema favorito", "📚 Algo que quiero aprender", "🧪 Lo uso si hace falta", "😵 Mucha matemática para mí"]},
+  {"id": 87, "key": "prompts", "icon": "💬", "tag": "// módulo: prompts.exe", "text": "Tus prompts para la IA suelen ser...", "options": ["📝 Largos y bien detallados", "⚡ Cortos y directos", "🎲 Los voy ajustando hasta que sirve", "🤝 Una conversación, como con un amigo"]},
+  {"id": 88, "key": "bots", "icon": "🤖", "tag": "// módulo: bots.exe", "text": "Un bot que te gustaría crear sería...", "options": ["💬 Uno de chat con personalidad", "📅 Uno que me organice la vida", "🎮 Uno para jugar", "💌 Uno que mande piropos de programador"]},
+  {"id": 89, "key": "game_jam", "icon": "🎮", "tag": "// módulo: game_jam.exe", "text": "Si hacemos un videojuego en una game jam, tú harías...", "options": ["🎨 El arte y los gráficos", "⚙️ La lógica y el código", "🎵 La música y los sonidos", "📝 La historia y las ideas"]},
+  {"id": 90, "key": "advent_code", "icon": "🎄", "tag": "// módulo: advent_code.exe", "text": "Un reto como Advent of Code, ¿lo harías juntos?", "options": ["🎄 Sí, cada día un problema", "🏆 Sí, pero compitiendo", "😅 Sí, hasta que se ponga difícil", "💤 Mejor solo mirar"]},
+  {"id": 91, "key": "github_stars", "icon": "⭐", "tag": "// módulo: github_stars.exe", "text": "Las estrellas de GitHub para ti son...", "options": ["⭐ Muy importantes, las colecciono", "👀 Un buen indicador de calidad", "🙃 Solo números", "🤫 Doy estrellas en silencio"]},
+  {"id": 92, "key": "readme", "icon": "📄", "tag": "// módulo: readme.exe", "text": "Tu README suele estar...", "options": ["✨ Completo, con capturas y todo", "📝 Con lo mínimo necesario", "🕳️ Vacío o con una sola línea", "💜 Con muchos emojis y cariño"]},
+  {"id": 93, "key": "issues", "icon": "🐙", "tag": "// módulo: issues.exe", "text": "Si te abren un issue en tu repo, tú...", "options": ["⚡ Respondo al instante", "📅 Lo reviso cuando puedo", "😱 Entro en pánico", "🙈 Lo cierro y ya"]},
+  {"id": 94, "key": "modo_noche", "icon": "🌙", "tag": "// módulo: modo_noche.exe", "text": "Programar de madrugada es...", "options": ["🌙 Cuando mejor me sale", "😵 Solo cuando hay urgencia", "☕ Posible con mucho café", "🛌 Prefiero dormir y programar luego"]},
+  {"id": 95, "key": "entorno_casa", "icon": "🏠", "tag": "// módulo: entorno_casa.exe", "text": "Tu escritorio de programador está...", "options": ["✨ Ordenado, con plantas y luces", "🥤 Con vasos, cables y papeles", "📚 Con libros de programación", "🐱 Con un gato encima del teclado"]},
+  {"id": 96, "key": "notificaciones", "icon": "🔔", "tag": "// módulo: notificaciones.exe", "text": "Las notificaciones mientras programas...", "options": ["🔕 Todas apagadas, necesito foco", "🔔 Solo las importantes", "📱 Contesto todo al instante", "🙃 Ni sé dónde están"]},
+  {"id": 97, "key": "wifi_dev", "icon": "📡", "tag": "// módulo: wifi_dev.exe", "text": "Si se cae internet mientras programas, tú...", "options": ["📱 Comparto datos del celular", "🛠️ Sigo trabajando sin conexión", "😅 Aprovecho para descansar", "📞 Llamo al proveedor, ¡ya!"]},
+  {"id": 98, "key": "hackathon", "icon": "🎒", "tag": "// módulo: hackathon.exe", "text": "En un hackathon, tu rol sería...", "options": ["🧠 El que arma la idea", "⌨️ El que programa sin parar", "🎨 El que diseña la interfaz", "🎤 El que presenta al final"]},
+  {"id": 99, "key": "commit_cita", "icon": "💜", "tag": "// módulo: commit_cita.exe", "text": "¿Qué mensaje de commit le pondrías a nuestra cita?", "options": ["✨ feat: primera cita exitosa", "🐛 fix: nervios resueltos", "🚀 deploy: empezamos algo bonito", "💜 refactor: mejorando el futuro juntos"]},
+  {"id": 100, "key": "pull_request", "icon": "🔥", "tag": "// módulo: pull_request.exe", "text": "Si nuestra relación fuera un pull request, estaría...", "options": ["✅ Aprobada y lista para merge", "💬 Con comentarios por resolver", "🔄 En revisión, con ganas", "🚀 Ya en producción"]},
+  {"id": 101, "key": "metricas", "icon": "📊", "tag": "// módulo: metricas.exe", "text": "Para medir cómo salió la cita, usaríamos...", "options": ["📈 Una gráfica de felicidad", "⭐ Una calificación de 1 a 5", "💬 Un feedback detallado", "🧪 Una prueba A/B"]},
+  {"id": 102, "key": "stack_favorito", "icon": "🛠️", "tag": "// módulo: stack_favorito.exe", "text": "Para empezar un proyecto juntos, ¿qué stack elegimos?", "options": ["⚛️ React y Next.js", "🐍 Python y FastAPI", "🟢 Node y Express", "🦀 Rust, por diversión"]},
 ];
 
 const withIds = (list: Question[]): Question[] => list.map((q, i) => ({ ...q, id: 3 + i }));
@@ -158,6 +158,7 @@ export default function HomePage() {
   const [showNoMsg, setShowNoMsg] = useState(false);
   const [pickError, setPickError] = useState<Record<number, boolean>>({});
   const [showFinale, setShowFinale] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const [selectedPosition, setSelectedPosition] = useState<{ left: string; top: string } | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>('');
@@ -259,6 +260,14 @@ export default function HomePage() {
           fecha_y_hora: answers[2] ?? '—',
           ...Object.fromEntries(questions.map((q) => [q.key, answers[q.id] ?? '—'])),
           respuesta_final: 'SÍ, ACEPTO LOS TÉRMINOS Y CONDICIONES ✅',
+          // Si la persona dejó su correo, FormSubmit le manda un agradecimiento
+          ...(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim())
+            ? {
+                email: userEmail.trim(),
+                _autoresponse:
+                  '¡Gracias por responder mi cita de programador! 💜🐱 Tus respuestas ya me llegaron y pronto te escribo. — Ángel Said',
+              }
+            : {}),
         }),
       });
     } catch (error) {
@@ -704,6 +713,22 @@ export default function HomePage() {
             <p style={{ fontFamily: 'Fira Code, monospace', fontSize: 9, color: 'var(--text-muted)', marginTop: 6 }}>
               // advertencia: respuesta_incorrecta no existe
             </p>
+          </div>
+
+          <div style={{ marginTop: 12, background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: 12, textAlign: 'left' }}>
+            <label htmlFor="user-email" style={{ display: 'block', fontFamily: 'Fira Code, monospace', fontSize: 10, color: 'var(--text-muted)', marginBottom: 6 }}>
+              // tu_correo (opcional): te mando un agradecimiento 💌
+            </label>
+            <input
+              id="user-email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder="tucorreo@ejemplo.com"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              style={{ width: '100%', fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 14, padding: 12, border: '2px solid var(--border)', borderRadius: 'var(--radius-sm)', color: 'var(--text)', background: '#fff' }}
+            />
           </div>
 
           <button className="btn-next btn-confirm" style={{ width: '100%', background: 'linear-gradient(135deg, var(--accent), #db2777)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '14px 20px', fontFamily: 'Nunito, sans-serif', fontSize: 13, fontWeight: 800, cursor: 'pointer', transition: 'all 0.2s ease', letterSpacing: 0.5, boxShadow: '0 4px 12px rgba(236,72,153,0.3)', marginTop: 12, display: showFinale ? 'none' : 'block' }} onClick={celebrate}>
