@@ -7,152 +7,132 @@ import html2canvas from 'html2canvas';
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const asset = (path: string) => `${BASE_PATH}${path}`;
 
-const questions = [
-  {
-    id: 3,
-    key: 'lenguaje',
-    icon: '💻',
-    tag: '// módulo: lenguaje_favorito.ts',
-    text: '💻 ¿Con qué lenguaje de programación compilamos esta cita?',
-    options: [
-      '🐍 Python — simple, legible y sin llaves',
-      '🟨 JavaScript — funciona... hasta que no 🤡',
-      '⚙️ C++ — poder total, memory leaks incluidos',
-      '☕ Java — verboso pero de confianza',
-    ],
-  },
-  {
-    id: 4,
-    key: 'entorno',
-    icon: '📍',
-    tag: '// módulo: entorno_de_desarrollo.config',
-    text: '📍 Primera cita — ¿en qué entorno hacemos deploy?',
-    options: [
-      '☕ Café + laptops — pair programming romántico',
-      '🎮 Hackathon de dos — ganar o hacer merge conflict',
-      '🔭 Meetup tech — networking... pero de corazones',
-      '📚 Librería + helado — leyendo "Clean Code" juntos',
-    ],
-  },
-  {
-    id: 5,
-    key: 'stack_food',
-    icon: '🍽',
-    tag: '// módulo: stack_gastronomico.json',
-    text: '🍽 Escoge el stack gastronómico de la noche',
-    options: [
-      '🍕 Pizza — el commit más sólido de la historia',
-      '🍣 Sushi — raw data sin procesar',
-      '🍔 Burger — arquitectura en capas (frontend, backend, queso)',
-      '🌮 Tacos — open source y altamente customizable',
-    ],
-  },
-  {
-    id: 6,
-    key: 'next_steps',
-    icon: '💫',
-    tag: '// módulo: next_steps.sh',
-    text: '✨ Después de la cita... ¿qué ejecutamos? (hypothetically 👀)',
-    options: [
-      '🌙 Paseo nocturno debatiendo tabs vs spaces',
-      '🎵 Playlist lo-fi para programar en bucle infinito',
-      '🎲 Maratón de side projects — ganador elige el próximo repo',
-      '🌠 Ver las estrellas — sin errores 404',
-    ],
-  },
-  {
-    id: 7,
-    key: 'editor',
-    icon: '⌨️',
-    tag: '// módulo: editor_de_codigo.exe',
-    text: '⌨️ ¿Cuál es tu editor de código del alma?',
-    options: [
-      '🟦 VS Code — lo usa medio planeta',
-      '🐧 Vim — todavía no sé cómo salir',
-      '🧠 IntelliJ / PyCharm — IDE completo, RAM incluida',
-      '📝 Bloc de notas — soy un valiente sin autocompletado',
-    ],
-  },
-  {
-    id: 8,
-    key: 'tema',
-    icon: '🌗',
-    tag: '// módulo: theme.config',
-    text: '🌗 ¿Modo oscuro o modo claro?',
-    options: [
-      '🌙 Modo oscuro — mis ojos lo agradecen',
-      '☀️ Modo claro — vivo al límite',
-      '🤖 Automático — que decida el sistema',
-      '🕐 Depende de la hora del bug',
-    ],
-  },
-  {
-    id: 9,
-    key: 'indentacion',
-    icon: '↹',
-    tag: '// módulo: indentacion.lint',
-    text: '↹ El debate eterno: ¿tabs o spaces?',
-    options: [
-      '➡️ Tabs — un carácter, mil posibilidades',
-      '2️⃣ 2 espacios — compacto y elegante',
-      '4️⃣ 4 espacios — el estándar de siempre',
-      '✨ Que Prettier decida por nosotros',
-    ],
-  },
-  {
-    id: 10,
-    key: 'bug',
-    icon: '🐛',
-    tag: '// módulo: debugging.log',
-    text: '🐛 Si la cita tiene un bug, ¿qué hacemos?',
-    options: [
-      '🔍 Debuggear juntos con console.log por todos lados',
-      '⏪ git revert — volvemos al último commit bueno',
-      '🤷 "En mi máquina funciona" — y ya',
-      '📚 Buscar en Stack Overflow, copiar y rezar',
-    ],
-  },
-  {
-    id: 11,
-    key: 'combustible',
-    icon: '🥤',
-    tag: '// módulo: combustible_dev.env',
-    text: '🥤 ¿Con qué combustible compilamos la noche?',
-    options: [
-      '☕ Café — dependencia oficial del desarrollador',
-      '⚡ Bebida energética — modo hackathon',
-      '🧋 Boba — dulce y con dependencias',
-      '💧 Agua — hidratación, un buen hábito',
-    ],
-  },
-  {
-    id: 12,
-    key: 'deploy',
-    icon: '🚀',
-    tag: '// módulo: deploy_segunda_cita.yml',
-    text: '🚀 ¿Cómo hacemos deploy de la segunda cita?',
-    options: [
-      '▲ Vercel — push y listo, sin complicaciones',
-      '🔥 Hotfix directo en producción — sin miedo',
-      '🔁 Pipeline CI/CD semanal — con tests y todo',
-      '😈 git push --force — que sea lo que sea',
-    ],
-  },
+type Question = { id: number; key: string; icon: string; tag: string; text: string; options: string[] };
+
+// Cuántas preguntas salen en cada cita (hay 100 en total y salen al azar). Pon 100 para que salgan todas.
+const QUESTIONS_PER_DATE = 20;
+
+const QUESTION_BANK: Question[] = [
+  {"id": 3, "key": "lenguaje", "icon": "💻", "tag": "// módulo: lenguaje_favorito.ts", "text": "💻 ¿Con qué lenguaje de programación compilamos esta cita?", "options": ["🐍 Python — simple, legible y sin llaves", "🟨 JavaScript — funciona... hasta que no 🤡", "⚙️ C++ — poder total, memory leaks incluidos", "☕ Java — verboso pero de confianza"]},
+  {"id": 4, "key": "entorno", "icon": "📍", "tag": "// módulo: entorno_de_desarrollo.config", "text": "📍 Primera cita — ¿en qué entorno hacemos deploy?", "options": ["☕ Café + laptops — pair programming romántico", "🎮 Hackathon de dos — ganar o hacer merge conflict", "🔭 Meetup tech — networking... pero de corazones", "📚 Librería + helado — leyendo \"Clean Code\" juntos"]},
+  {"id": 5, "key": "stack_food", "icon": "🍽", "tag": "// módulo: stack_gastronomico.json", "text": "🍽 Escoge el stack gastronómico de la noche", "options": ["🍕 Pizza — el commit más sólido de la historia", "🍣 Sushi — raw data sin procesar", "🍔 Burger — arquitectura en capas (frontend, backend, queso)", "🌮 Tacos — open source y altamente customizable"]},
+  {"id": 6, "key": "next_steps", "icon": "💫", "tag": "// módulo: next_steps.sh", "text": "✨ Después de la cita... ¿qué ejecutamos? (hypothetically 👀)", "options": ["🌙 Paseo nocturno debatiendo tabs vs spaces", "🎵 Playlist lo-fi para programar en bucle infinito", "🎲 Maratón de side projects — ganador elige el próximo repo", "🌠 Ver las estrellas — sin errores 404"]},
+  {"id": 7, "key": "editor", "icon": "⌨️", "tag": "// módulo: editor_de_codigo.exe", "text": "⌨️ ¿Cuál es tu editor de código del alma?", "options": ["🟦 VS Code — lo usa medio planeta", "🐧 Vim — todavía no sé cómo salir", "🧠 IntelliJ / PyCharm — IDE completo, RAM incluida", "📝 Bloc de notas — soy un valiente sin autocompletado"]},
+  {"id": 8, "key": "tema", "icon": "🌗", "tag": "// módulo: theme.config", "text": "🌗 ¿Modo oscuro o modo claro?", "options": ["🌙 Modo oscuro — mis ojos lo agradecen", "☀️ Modo claro — vivo al límite", "🤖 Automático — que decida el sistema", "🕐 Depende de la hora del bug"]},
+  {"id": 9, "key": "indentacion", "icon": "↹", "tag": "// módulo: indentacion.lint", "text": "↹ El debate eterno: ¿tabs o spaces?", "options": ["➡️ Tabs — un carácter, mil posibilidades", "2️⃣ 2 espacios — compacto y elegante", "4️⃣ 4 espacios — el estándar de siempre", "✨ Que Prettier decida por nosotros"]},
+  {"id": 10, "key": "bug", "icon": "🐛", "tag": "// módulo: debugging.log", "text": "🐛 Si la cita tiene un bug, ¿qué hacemos?", "options": ["🔍 Debuggear juntos con console.log por todos lados", "⏪ git revert — volvemos al último commit bueno", "🤷 \"En mi máquina funciona\" — y ya", "📚 Buscar en Stack Overflow, copiar y rezar"]},
+  {"id": 11, "key": "combustible", "icon": "🥤", "tag": "// módulo: combustible_dev.env", "text": "🥤 ¿Con qué combustible compilamos la noche?", "options": ["☕ Café — dependencia oficial del desarrollador", "⚡ Bebida energética — modo hackathon", "🧋 Boba — dulce y con dependencias", "💧 Agua — hidratación, un buen hábito"]},
+  {"id": 12, "key": "deploy", "icon": "🚀", "tag": "// módulo: deploy_segunda_cita.yml", "text": "🚀 ¿Cómo hacemos deploy de la segunda cita?", "options": ["▲ Vercel — push y listo, sin complicaciones", "🔥 Hotfix directo en producción — sin miedo", "🔁 Pipeline CI/CD semanal — con tests y todo", "😈 git push --force — que sea lo que sea"]},
+  {"id": 13, "key": "sistema_operativo", "icon": "🐧", "tag": "// módulo: sistema_operativo.exe", "text": "¿En qué sistema operativo vivimos esta cita?", "options": ["🐧 Linux — controlo hasta el último proceso", "🪟 Windows — compatible con todo", "🍎 macOS — todo funciona (si pagas)", "📱 Android — programo desde el celular"]},
+  {"id": 14, "key": "git_ramas", "icon": "🔀", "tag": "// módulo: git_ramas.exe", "text": "Tu forma de usar las ramas de git es...", "options": ["🌳 Una rama por feature, ordenadito", "🔥 Todo directo a main, sin miedo", "🌲 Cien ramas y no sé cuál es cuál", "🧹 Las borro apenas hago merge"]},
+  {"id": 15, "key": "commits", "icon": "💬", "tag": "// módulo: commits.exe", "text": "Tus mensajes de commit suelen ser...", "options": ["📝 Claros y descriptivos", "🤷 \"fix\" y \"arreglos varios\"", "😭 \"por favor funciona\"", "🎭 En spanglish según el día"]},
+  {"id": 16, "key": "hora_codigo", "icon": "☕", "tag": "// módulo: hora_codigo.exe", "text": "¿A qué hora programas mejor?", "options": ["🌅 Madrugada, con el café recién hecho", "☀️ En la mañana, con la mente fresca", "🌆 En la tarde, entre reuniones", "🌙 De noche, cuando todo está en silencio"]},
+  {"id": 17, "key": "musica_codear", "icon": "🎧", "tag": "// módulo: musica_codear.exe", "text": "¿Qué música escuchas mientras programas?", "options": ["🎵 Lo-fi para concentrarme", "🎸 Rock o metal para el flow", "🎹 Música clásica o instrumental", "🔇 Silencio total, no me hables"]},
+  {"id": 18, "key": "mascota_dev", "icon": "🐱", "tag": "// módulo: mascota_dev.exe", "text": "Tu compañero ideal de programación sería...", "options": ["🐱 Un gato sobre el teclado", "🐶 Un perro durmiendo a mis pies", "🦆 Un patito de goma para depurar", "🌵 Un cactus, bajo mantenimiento"]},
+  {"id": 19, "key": "debug_patito", "icon": "🦆", "tag": "// módulo: debug_patito.exe", "text": "Cuando no encuentras un bug, ¿qué haces?", "options": ["🦆 Se lo explico al patito de goma", "🚶 Doy una vuelta y vuelvo", "🔍 Pongo console.log en todo", "💤 Lo dejo para mañana"]},
+  {"id": 20, "key": "ia_codigo", "icon": "🤖", "tag": "// módulo: ia_codigo.exe", "text": "¿Cómo usas la IA al programar?", "options": ["🤝 Como copiloto, reviso todo", "📋 Copio y pego sin mirar", "💡 Solo para dudas y explicaciones", "🚫 Prefiero hacerlo a la antigua"]},
+  {"id": 21, "key": "teclado", "icon": "⌨️", "tag": "// módulo: teclado.exe", "text": "¿Cuál es tu teclado ideal?", "options": ["🔊 Mecánico, que se oiga en todo el piso", "🤫 Silencioso, para no molestar", "💻 El de la laptop y ya", "🎮 Gamer con luces RGB"]},
+  {"id": 22, "key": "monitores", "icon": "🖥️", "tag": "// módulo: monitores.exe", "text": "¿Cuántos monitores tienes en tu setup?", "options": ["1️⃣ Uno, y me alcanza", "2️⃣ Dos, un clásico", "3️⃣ Tres o más, soy la NASA", "📱 Solo la laptop y mi paciencia"]},
+  {"id": 23, "key": "raton", "icon": "🖱️", "tag": "// módulo: raton.exe", "text": "¿Mouse o solo atajos de teclado?", "options": ["⌨️ Solo teclado, mouse es para débiles", "🖱️ Mouse, soy más visual", "🤝 Un poco de cada uno", "🖲️ Trackpad y a rezar"]},
+  {"id": 24, "key": "comida_noche", "icon": "🍕", "tag": "// módulo: comida_noche.exe", "text": "Es de madrugada y hay deploy pendiente. ¿Qué cenas?", "options": ["🍕 Pizza fría de hace dos días", "🍜 Fideos instantáneos", "🥜 Snacks directo del escritorio", "🍳 Algo casero, hay que cuidarse"]},
+  {"id": 25, "key": "bebida_dev", "icon": "🥤", "tag": "// módulo: bebida_dev.exe", "text": "La bebida oficial de este desarrollador es...", "options": ["☕ Café, siempre café", "⚡ Energética, versión turbo", "🧋 Té o boba", "💧 Agua, soy de los raros"]},
+  {"id": 26, "key": "trabajo_remoto", "icon": "🏠", "tag": "// módulo: trabajo_remoto.exe", "text": "¿Dónde prefieres trabajar?", "options": ["🏠 Desde casa en pijama", "🏢 En la oficina, con gente", "☕ En una cafetería con wifi", "🌴 Desde cualquier lugar con internet"]},
+  {"id": 27, "key": "modo_vim", "icon": "🌓", "tag": "// módulo: modo_vim.exe", "text": "¿Qué opinas de Vim?", "options": ["😍 Lo amo, no uso otra cosa", "😵 Entré y todavía no sé salir", "🤨 Prefiero un editor normal", "🛠️ Lo uso solo en servidores"]},
+  {"id": 28, "key": "js_opinion", "icon": "🟨", "tag": "// módulo: js_opinion.exe", "text": "¿Qué piensas de JavaScript?", "options": ["❤️ Lo amo, a pesar de todo", "😅 Funciona... a veces", "🤡 [] + {} es más misterioso que el amor", "😤 Prefiero cualquier otro lenguaje"]},
+  {"id": 29, "key": "python_opinion", "icon": "🐍", "tag": "// módulo: python_opinion.exe", "text": "Python para ti es...", "options": ["😌 Elegante y fácil de leer", "🐢 Lento pero muy práctico", "🧪 Ideal para datos e IA", "📦 Un entorno virtual por cada cosa"]},
+  {"id": 30, "key": "lenguaje_nuevo", "icon": "🦀", "tag": "// módulo: lenguaje_nuevo.exe", "text": "¿Qué lenguaje te gustaría aprender?", "options": ["🦀 Rust, por la seguridad", "🐹 Go, por lo simple", "🔷 TypeScript, ya que estoy", "🧩 Haskell, por puro masoquismo"]},
+  {"id": 31, "key": "framework_web", "icon": "⚛️", "tag": "// módulo: framework_web.exe", "text": "Tu framework web favorito es...", "options": ["⚛️ React, ¿cuál otro?", "💚 Vue, por lo amigable", "🅰️ Angular, soy de la vieja guardia", "⚡ Next.js o Svelte, lo más nuevo"]},
+  {"id": 32, "key": "base_datos", "icon": "🗄️", "tag": "// módulo: base_datos.exe", "text": "¿Qué base de datos prefieres?", "options": ["🐘 PostgreSQL, la confiable", "🐬 MySQL, la de siempre", "🍃 MongoDB, sin esquemas", "📄 Un archivo JSON y ya"]},
+  {"id": 33, "key": "contrasenas", "icon": "🔐", "tag": "// módulo: contrasenas.exe", "text": "Tus contraseñas son...", "options": ["🔑 Con gestor y todo único", "📝 Una sola para todo (shhh)", "🧠 Las memorizo, sé mis cosas", "📒 Escritas en un post-it"]},
+  {"id": 34, "key": "navegador", "icon": "🌐", "tag": "// módulo: navegador.exe", "text": "¿Qué navegador usas?", "options": ["🟢 Chrome, el clásico", "🦊 Firefox, por principios", "🧭 Safari o Edge, sin drama", "🛡️ Brave o alguno privado"]},
+  {"id": 35, "key": "carpetas", "icon": "🗂️", "tag": "// módulo: carpetas.exe", "text": "Tu carpeta de descargas está...", "options": ["✨ Ordenadita y organizada", "🌪️ Un caos con 4000 archivos", "🧹 Vacía, la limpio cada semana", "🤷 No sé ni dónde queda"]},
+  {"id": 36, "key": "nombres_variables", "icon": "📛", "tag": "// módulo: nombres_variables.exe", "text": "Cuando nombras variables, usas...", "options": ["🧐 Nombres claros y largos", "🔤 Letras sueltas como x, y, z", "🎲 temp, temp2, temp_final_final", "🐱 Nombres de gatitos, obvio"]},
+  {"id": 37, "key": "comentarios", "icon": "💭", "tag": "// módulo: comentarios.exe", "text": "Sobre comentar el código opinas que...", "options": ["✅ Se debe comentar todo", "🙅 El buen código no los necesita", "🕳️ Los hago... a veces", "📜 Comentarios con chistes internos"]},
+  {"id": 38, "key": "documentacion", "icon": "📚", "tag": "// módulo: documentacion.exe", "text": "¿Lees la documentación antes de empezar?", "options": ["📖 Siempre, soy ordenado", "👀 Solo si algo falla", "🧑‍💻 Voy directo al ejemplo", "🙈 Cuál documentación"]},
+  {"id": 39, "key": "pruebas", "icon": "🧪", "tag": "// módulo: pruebas.exe", "text": "Las pruebas (tests) para ti son...", "options": ["🧪 Sagradas, cubro todo", "⏳ Las hago después, lo juro", "🤞 El mejor test es producción", "🔥 Los escribo cuando algo explota"]},
+  {"id": 40, "key": "refactor", "icon": "🔁", "tag": "// módulo: refactor.exe", "text": "Cuando ves código feo ajeno, tú...", "options": ["🧼 Lo refactorizo con cariño", "🙈 Mejor no toco nada", "📩 Dejo un comentario educado", "😤 Lo reescribo entero"]},
+  {"id": 41, "key": "arquitectura", "icon": "🏗️", "tag": "// módulo: arquitectura.exe", "text": "Tu estilo al armar un proyecto es...", "options": ["📐 Planifico todo primero", "🏃 Empiezo a programar y veo", "🧱 Pequeños pasos, bien probados", "🎲 Improviso y rezo"]},
+  {"id": 42, "key": "plazos", "icon": "⏱️", "tag": "// módulo: plazos.exe", "text": "Ante una fecha de entrega, tú...", "options": ["🗓️ Termino con tiempo de sobra", "⏰ Todo en la última noche", "📈 Divido en tareas y avanzo", "😅 Pido más tiempo, siempre"]},
+  {"id": 43, "key": "bug_favorito", "icon": "🐛", "tag": "// módulo: bug_favorito.exe", "text": "Tu tipo de bug favorito (para odiar) es...", "options": ["🔤 Un punto y coma olvidado", "🌀 Uno que solo pasa en producción", "🧟 Uno que desaparece al depurar", "📅 Uno por culpa de las zonas horarias"]},
+  {"id": 44, "key": "error_famoso", "icon": "😱", "tag": "// módulo: error_famoso.exe", "text": "¿Qué error te da más miedo ver?", "options": ["💥 Segmentation fault", "❓ undefined is not a function", "🔴 Error 500 sin más información", "🧱 Merge conflict gigante"]},
+  {"id": 45, "key": "stack_overflow", "icon": "🔍", "tag": "// módulo: stack_overflow.exe", "text": "Stack Overflow es para ti...", "options": ["🙏 Una biblia", "📋 Fuente de todo mi código", "🤫 Lo uso, pero no lo cuento", "🤖 Ya no, ahora le pregunto a la IA"]},
+  {"id": 46, "key": "respaldos", "icon": "💾", "tag": "// módulo: respaldos.exe", "text": "¿Haces copias de seguridad?", "options": ["☁️ Automáticas, en la nube", "💽 A mano, cada tanto", "🤞 No, confío en la suerte", "😰 Solo después de perder algo"]},
+  {"id": 47, "key": "dispositivo_extra", "icon": "🔌", "tag": "// módulo: dispositivo_extra.exe", "text": "¿Qué gadget no puede faltar?", "options": ["🎧 Audífonos con cancelación", "🖱️ Un buen mouse", "🔋 Un cargador, siempre", "📱 Mi celular de respaldo"]},
+  {"id": 48, "key": "bateria", "icon": "🔋", "tag": "// módulo: bateria.exe", "text": "La batería de tu laptop casi siempre está...", "options": ["🟢 Llena, cargo a diario", "🟡 A la mitad", "🔴 Al uno por ciento", "🔌 Conectada, nunca la desenchufo"]},
+  {"id": 49, "key": "wifi", "icon": "📶", "tag": "// módulo: wifi.exe", "text": "Si se cae el wifi en plena cita, tú...", "options": ["📱 Comparto datos del celular", "🧘 Aprovecho para platicar", "😱 Entro en pánico tech", "🔧 Reinicio el router yo mismo"]},
+  {"id": 50, "key": "viaje_tech", "icon": "🌍", "tag": "// módulo: viaje_tech.exe", "text": "¿A qué evento tech te gustaría ir juntos?", "options": ["🎤 Una conferencia de desarrolladores", "🏆 Un hackathon", "🎮 Una convención de videojuegos", "🚀 Un lanzamiento de producto"]},
+  {"id": 51, "key": "videojuegos", "icon": "🎮", "tag": "// módulo: videojuegos.exe", "text": "¿Qué tipo de videojuegos te gustan?", "options": ["🧩 Puzzles y estrategia", "⚔️ Aventura y rol", "🏁 Carreras o deportes", "🎲 Los de mesa y cooperativos"]},
+  {"id": 52, "key": "serie_tech", "icon": "📺", "tag": "// módulo: serie_tech.exe", "text": "¿Qué serie o película tech verías en pareja?", "options": ["🤖 Una de inteligencia artificial", "🕵️ Una de hackers", "🚀 Ciencia ficción espacial", "😂 Una comedia de programadores"]},
+  {"id": 53, "key": "peliculas_noche", "icon": "🎬", "tag": "// módulo: peliculas_noche.exe", "text": "Para una noche de películas elegimos...", "options": ["🍿 Ciencia ficción", "😂 Comedia ligera", "🧠 Un thriller que te rompa la cabeza", "💞 Una romántica, sin juzgar"]},
+  {"id": 54, "key": "juegos_mesa", "icon": "🎲", "tag": "// módulo: juegos_mesa.exe", "text": "Si jugamos algo en la cita, que sea...", "options": ["♟️ Ajedrez", "🃏 Cartas", "🎮 Videojuegos cooperativos", "🧩 Un escape room"]},
+  {"id": 55, "key": "libro_dev", "icon": "📖", "tag": "// módulo: libro_dev.exe", "text": "¿Qué libro de programación recomiendas?", "options": ["📘 Clean Code", "🧠 El programador pragmático", "🏛️ Patrones de diseño", "📕 Ninguno, leo otra cosa"]},
+  {"id": 56, "key": "aprendizaje", "icon": "🎓", "tag": "// módulo: aprendizaje.exe", "text": "Para aprender algo nuevo, prefieres...", "options": ["🎥 Videos y tutoriales", "📚 Documentación y libros", "🛠️ Hacer proyectos reales", "👥 Preguntarle a alguien que sepa"]},
+  {"id": 57, "key": "habilidad_oculta", "icon": "🧠", "tag": "// módulo: habilidad_oculta.exe", "text": "¿Cuál es tu superpoder fuera del código?", "options": ["🍳 Cocinar", "🎸 Tocar un instrumento", "🏃 Hacer deporte", "🎨 Dibujar o diseñar"]},
+  {"id": 58, "key": "ejercicio", "icon": "🏋️", "tag": "// módulo: ejercicio.exe", "text": "¿Haces ejercicio entre tanto código?", "options": ["🏃 Sí, casi todos los días", "🧘 Estiramientos de vez en cuando", "🪑 Mi cardio es subir la escalera", "🙃 El ejercicio es girar la silla"]},
+  {"id": 59, "key": "sueno", "icon": "😴", "tag": "// módulo: sueno.exe", "text": "Tu horario de sueño es...", "options": ["🛌 Ocho horas, bien dormido", "🧟 Cuatro y mucho café", "🦉 Búho nocturno", "🐓 Madrugador de corazón"]},
+  {"id": 60, "key": "descanso", "icon": "🧘", "tag": "// módulo: descanso.exe", "text": "Para descansar de la pantalla prefieres...", "options": ["🌳 Salir a caminar", "📚 Leer algo en papel", "🎶 Escuchar música", "📱 Cambiar de pantalla, ja"]},
+  {"id": 61, "key": "comida_favorita", "icon": "🍔", "tag": "// módulo: comida_favorita.exe", "text": "Tu comida reconfortante es...", "options": ["🍝 Pasta", "🍔 Hamburguesa", "🌮 Tacos", "🍣 Sushi"]},
+  {"id": 62, "key": "postre", "icon": "🍰", "tag": "// módulo: postre.exe", "text": "¿Qué postre pedimos?", "options": ["🍫 Algo de chocolate", "🍨 Helado", "🍰 Pastel", "🍓 Fruta, para sentirnos sanos"]},
+  {"id": 63, "key": "bebida_cita", "icon": "🧋", "tag": "// módulo: bebida_cita.exe", "text": "Para brindar en la cita pedimos...", "options": ["☕ Un café especial", "🧋 Una boba", "🍹 Algo con alcohol", "🥤 Un jugo o refresco"]},
+  {"id": 64, "key": "lugar_cita", "icon": "🌆", "tag": "// módulo: lugar_cita.exe", "text": "¿Dónde sería la cita perfecta?", "options": ["🌳 Un parque tranquilo", "🏙️ Un mirador de la ciudad", "🏛️ Un museo", "🎡 Un lugar de juegos"]},
+  {"id": 65, "key": "viaje", "icon": "🏖️", "tag": "// módulo: viaje.exe", "text": "Si pudiéramos viajar a cualquier lado, iríamos a...", "options": ["🗼 Japón, ciudad de tecnología", "🏔️ Las montañas", "🏖️ La playa", "🌎 Una ciudad que no conozcamos"]},
+  {"id": 66, "key": "regalo", "icon": "🎁", "tag": "// módulo: regalo.exe", "text": "Un buen regalo para ti sería...", "options": ["🎧 Unos audífonos", "⌨️ Un teclado nuevo", "📚 Un libro", "🍫 Algo dulce, siempre"]},
+  {"id": 67, "key": "detalle", "icon": "💌", "tag": "// módulo: detalle.exe", "text": "¿Cómo prefieres que nos mensajeemos?", "options": ["💬 Texto, rapidísimo", "🎤 Notas de voz", "📞 Llamadas", "💌 Cartas, a la antigua"]},
+  {"id": 68, "key": "red_social", "icon": "📱", "tag": "// módulo: red_social.exe", "text": "¿Cuál es tu red social favorita?", "options": ["📸 Instagram", "🎵 TikTok", "🐦 X o Twitter", "💼 LinkedIn, soy serio"]},
+  {"id": 69, "key": "fotos", "icon": "📸", "tag": "// módulo: fotos.exe", "text": "¿Nos tomamos una foto en la cita?", "options": ["📷 Sí, selfie juntos", "🎞️ Una más artística", "🙈 Mejor no, soy tímido", "📹 Un video corto"]},
+  {"id": 70, "key": "animal_favorito", "icon": "🐶", "tag": "// módulo: animal_favorito.exe", "text": "¿Qué animal te gusta más?", "options": ["🐱 Gatos, por supuesto", "🐶 Perros", "🦊 Zorros", "🐙 Pulpos, por inteligentes"]},
+  {"id": 71, "key": "clima", "icon": "🌧️", "tag": "// módulo: clima.exe", "text": "El clima ideal para una cita sería...", "options": ["☀️ Soleado y calentito", "🌧️ Lluvia y café", "🌙 Noche despejada", "☁️ Nublado, sin drama"]},
+  {"id": 72, "key": "genero_musical", "icon": "🎵", "tag": "// módulo: genero_musical.exe", "text": "¿Qué música ponemos en la cita?", "options": ["🎶 Pop", "🎸 Rock", "🎷 Jazz o lo-fi", "🎤 Lo que se escuche en la radio"]},
+  {"id": 73, "key": "retro", "icon": "🕹️", "tag": "// módulo: retro.exe", "text": "¿Qué consola o juego retro te gusta?", "options": ["🍄 Nintendo y Mario", "🔵 Sonic y Sega", "🕹️ Arcade clásico", "👾 Juegos de 8 bits"]},
+  {"id": 74, "key": "acertijo", "icon": "🧩", "tag": "// módulo: acertijo.exe", "text": "Para romper el hielo, ¿qué prefieres?", "options": ["🧮 Un acertijo lógico", "😂 Un chiste de programadores", "🎲 Un juego de preguntas", "🤐 Un silencio cómodo"]},
+  {"id": 75, "key": "espacio", "icon": "🌌", "tag": "// módulo: espacio.exe", "text": "¿Qué opinas del espacio y las estrellas?", "options": ["🔭 Me fascinan", "🚀 Quiero ir a Marte", "🌙 Me gusta mirarlas de noche", "📺 Prefiero verlas en documentales"]},
+  {"id": 76, "key": "robots", "icon": "🤖", "tag": "// módulo: robots.exe", "text": "Si tuvieras un robot, ¿qué haría por ti?", "options": ["🧹 Las tareas de la casa", "🍳 Cocinar", "💻 Programar mis bugs", "🎮 Jugar conmigo"]},
+  {"id": 77, "key": "futuro", "icon": "🕶️", "tag": "// módulo: futuro.exe", "text": "En diez años te imaginas...", "options": ["🏢 Con mi propia empresa", "🌍 Viajando y programando", "🏠 En una casita tranquila", "🚀 Creando algo gigante"]},
+  {"id": 78, "key": "trabajo_ideal", "icon": "🧑‍🚀", "tag": "// módulo: trabajo_ideal.exe", "text": "Tu trabajo soñado sería...", "options": ["🎮 En una empresa de videojuegos", "🚀 En una startup", "🔒 En ciberseguridad", "🎓 Enseñando a programar"]},
+  {"id": 79, "key": "estres", "icon": "🧯", "tag": "// módulo: estres.exe", "text": "Cuando algo explota en producción, tú...", "options": ["🧘 Mantengo la calma", "🏃 Corro al teclado", "📞 Llamo a medio equipo", "🙈 Finjo que no vi nada"]},
+  {"id": 80, "key": "meta", "icon": "🎯", "tag": "// módulo: meta.exe", "text": "¿Cuál es tu meta de este año?", "options": ["📈 Mejorar mi código", "💰 Crecer mi proyecto", "🌎 Viajar más", "❤️ Pasar más tiempo con quien quiero"]},
+  {"id": 81, "key": "meme_dev", "icon": "😂", "tag": "// módulo: meme_dev.exe", "text": "¿Qué meme de programadores te representa?", "options": ["🔥 Esto está bien (todo se quema)", "🤷 En mi máquina funciona", "🌀 Programando a las 3 AM", "🦆 El patito de goma"]},
+  {"id": 82, "key": "podcast", "icon": "🎤", "tag": "// módulo: podcast.exe", "text": "¿Qué prefieres escuchar de tecnología?", "options": ["🎙️ Podcasts", "📺 Videos de YouTube", "📰 Blogs y noticias", "📚 Libros"]},
+  {"id": 83, "key": "compras", "icon": "🛒", "tag": "// módulo: compras.exe", "text": "Tu compra tech favorita siempre es...", "options": ["⌨️ Periféricos", "🎧 Audio", "💻 Una laptop nueva", "🔌 Cables y adaptadores que nunca sobran"]},
+  {"id": 84, "key": "agenda", "icon": "📅", "tag": "// módulo: agenda.exe", "text": "¿Cómo organizas tus tareas?", "options": ["📋 Con una app de tareas", "📝 En papel", "🧠 Todo en la cabeza", "🔔 Con alarmas por todos lados"]},
+  {"id": 85, "key": "madrugada", "icon": "🌅", "tag": "// módulo: madrugada.exe", "text": "¿Un amanecer o un atardecer?", "options": ["🌅 Amanecer, tranquilo y nuevo", "🌇 Atardecer, más romántico", "🌌 La noche entera", "⛅ Los dos, no escojo"]},
+  {"id": 86, "key": "plan_casa", "icon": "🛋️", "tag": "// módulo: plan_casa.exe", "text": "Un plan en casa perfecto sería...", "options": ["🍿 Películas y manta", "🎮 Videojuegos juntos", "🍳 Cocinar algo rico", "💻 Programar algo juntos"]},
+  {"id": 87, "key": "transporte", "icon": "🚲", "tag": "// módulo: transporte.exe", "text": "¿Cómo nos movemos a la cita?", "options": ["🚗 En carro", "🚌 En transporte público", "🚲 En bici", "🚶 A pie, con calma"]},
+  {"id": 88, "key": "comida_picante", "icon": "🌮", "tag": "// módulo: comida_picante.exe", "text": "¿Cuánto picante aguantas?", "options": ["🔥 Todo, soy de hierro", "🌶️ Un poco", "🧊 Cero, soy sensible", "🥵 Pido y me arrepiento"]},
+  {"id": 89, "key": "orden", "icon": "🧺", "tag": "// módulo: orden.exe", "text": "Tu escritorio normalmente está...", "options": ["✨ Impecable", "📚 Con cosas encima", "🌪️ Un caos organizado", "🥤 Con vasos y tazas por todos lados"]},
+  {"id": 90, "key": "habito_lectura", "icon": "📖", "tag": "// módulo: habito_lectura.exe", "text": "¿Lees por gusto?", "options": ["📚 Sí, todo el tiempo", "📰 Solo noticias", "📖 De vez en cuando", "🙈 Leo más código que libros"]},
+  {"id": 91, "key": "proyecto_lado", "icon": "🛠️", "tag": "// módulo: proyecto_lado.exe", "text": "Un proyecto personal que te gustaría crear es...", "options": ["🎮 Un videojuego", "🌐 Una app útil", "🤖 Un bot o una IA", "📱 Algo para mi pareja"]},
+  {"id": 92, "key": "logro", "icon": "🏆", "tag": "// módulo: logro.exe", "text": "Tu mayor orgullo programando fue...", "options": ["🚀 Publicar mi primer proyecto", "🐛 Resolver un bug imposible", "🎓 Aprender sin ayuda", "🤝 Ayudar a alguien a aprender"]},
+  {"id": 93, "key": "pasion", "icon": "🔥", "tag": "// módulo: pasion.exe", "text": "Lo que más te apasiona del código es...", "options": ["🎨 Crear cosas desde cero", "🧩 Resolver problemas", "⚙️ Automatizar todo", "🌍 Que lo use mucha gente"]},
+  {"id": 94, "key": "puntualidad", "icon": "🕰️", "tag": "// módulo: puntualidad.exe", "text": "Para una cita, tú llegas...", "options": ["⏰ Diez minutos antes", "🕐 Justo a tiempo", "⌛ Un poquito tarde", "🏃 Corriendo con mil disculpas"]},
+  {"id": 95, "key": "estilo", "icon": "🧢", "tag": "// módulo: estilo.exe", "text": "Para la cita, tu estilo sería...", "options": ["👕 Una camiseta de programador", "👔 Elegante", "🧥 Casual y cómodo", "🎩 Algo sorpresa"]},
+  {"id": 96, "key": "conversacion", "icon": "🌙", "tag": "// módulo: conversacion.exe", "text": "¿De qué hablamos en la cita?", "options": ["💻 De tecnología", "🎮 De juegos y series", "🌍 De sueños y viajes", "🤷 De todo un poco"]},
+  {"id": 97, "key": "dulce_salado", "icon": "🧁", "tag": "// módulo: dulce_salado.exe", "text": "¿Dulce o salado?", "options": ["🍬 Dulce, siempre", "🧂 Salado", "🥨 Mitad y mitad", "🍟 Lo que sea, tengo hambre"]},
+  {"id": 98, "key": "color", "icon": "🎨", "tag": "// módulo: color.exe", "text": "¿Cuál es tu color favorito?", "options": ["💜 Morado", "💙 Azul", "💚 Verde", "🖤 Negro, como mi terminal"]},
+  {"id": 99, "key": "numero_suerte", "icon": "🔢", "tag": "// módulo: numero_suerte.exe", "text": "¿Cuál es tu número de la suerte?", "options": ["0️⃣ El cero, soy programador", "1️⃣ El uno, bit encendido", "4️⃣ El cuatro, como los errores 404", "🔢 El 42, la respuesta a todo"]},
+  {"id": 100, "key": "senal", "icon": "📡", "tag": "// módulo: senal.exe", "text": "Si fueras una tecnología serías...", "options": ["📶 Wifi, siempre conectado", "🔋 Una batería de larga duración", "☁️ La nube, siempre disponible", "🤖 Una IA, siempre aprendiendo"]},
+  {"id": 101, "key": "frecuencia", "icon": "🗓️", "tag": "// módulo: frecuencia.exe", "text": "¿Cada cuánto nos vemos si sale bien la cita?", "options": ["📆 Todas las semanas", "🗓️ Un par de veces al mes", "🎉 Cuando haya un plan genial", "💬 Hablamos a diario y vemos"]},
+  {"id": 102, "key": "final", "icon": "💝", "tag": "// módulo: final.exe", "text": "Para terminar... ¿cómo te fue en esta cita?", "options": ["💜 Perfecta, quiero otra", "😊 Muy bien, nos repetimos", "🤔 Déjame pensarlo", "🐱 Solo vine por los gatitos"]},
 ];
 
-const questionHeaderImages: Record<number, string> = {
-  3: asset('/memes/gatito3.png'),
-  4: asset('/memes/gatito4.png'),
-  5: asset('/memes/gatito5.png'),
-  6: asset('/memes/gatito6.png'),
-  7: asset('/memes/gatito7.png'),
-  8: asset('/memes/gatito3.png'),
-  9: asset('/memes/gatito4.png'),
-  10: asset('/memes/gatito5.png'),
-  11: asset('/memes/gatito6.png'),
-  12: asset('/memes/gatito7.png'),
-};
-const SUMMARY_STEP = 3 + questions.length;
+const withIds = (list: Question[]): Question[] => list.map((q, i) => ({ ...q, id: 3 + i }));
+
+function pickRandom(list: Question[], n: number): Question[] {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a.slice(0, Math.min(n, a.length));
+}
+
+const headerImages = [
+  asset('/memes/gatito3.png'),
+  asset('/memes/gatito4.png'),
+  asset('/memes/gatito5.png'),
+  asset('/memes/gatito6.png'),
+  asset('/memes/gatito7.png'),
+];
 const catHeaderImg = asset('/memes/gatito7.png');
 const catImagesStep1 = [asset('/memes/1.png'), asset('/memes/2.png'), asset('/memes/5.png')];
 const catImagesStep2 = [asset('/memes/3.jpg'), asset('/memes/4.png')];
@@ -171,6 +151,8 @@ const initialAns: Record<number, string> = {};
 
 export default function HomePage() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [questions, setQuestions] = useState<Question[]>(() => withIds(QUESTION_BANK.slice(0, QUESTIONS_PER_DATE)));
+  const SUMMARY_STEP = 3 + questions.length;
   const [answers, setAnswers] = useState<Record<number, string>>(initialAns);
   const [noAttempts, setNoAttempts] = useState(0);
   const [showNoMsg, setShowNoMsg] = useState(false);
@@ -197,7 +179,11 @@ export default function HomePage() {
     }));
     items.splice(2, 0, { key: 'cita', icon: '📅', value: answers[2] ?? '—' });
     return items;
-  }, [answers]);
+  }, [answers, questions]);
+
+  useEffect(() => {
+    setQuestions(withIds(pickRandom(QUESTION_BANK, QUESTIONS_PER_DATE)));
+  }, []);
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -631,7 +617,7 @@ export default function HomePage() {
                 <div className="progress-fill" style={{ height: '100%', background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 100, transition: 'width 0.5s cubic-bezier(.34,1.56,.64,1)', width: progress }} />
               </div>
               <div style={{ textAlign: 'center', margin: '8px 0' }}>
-                <img src={questionHeaderImages[stepIndex] ?? catHeaderImg} alt="Decoración" style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: 200, height: 'auto' }} />
+                <img src={headerImages[index % headerImages.length]} alt="Decoración" style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: 200, height: 'auto' }} />
               </div>
               <div className="q-card" style={{ background: 'var(--card)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', padding: 16, marginBottom: 12, border: '1px solid var(--border)' }}>
                 <span className="q-tag" style={{ fontFamily: 'Fira Code, monospace', fontSize: 10, background: 'var(--primary-light)', color: 'var(--primary)', padding: '3px 8px', borderRadius: 100, display: 'inline-block', marginBottom: 8, fontWeight: 500 }}>
