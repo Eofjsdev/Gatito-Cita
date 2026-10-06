@@ -106,7 +106,6 @@ QS.forEach((q, i) => {
 html += `<div class="step" id="s${SUMMARY}"><div style="text-align:center"><h2 style="font-size:20px;font-weight:900;color:var(--primary-dark)">📋 Resumen de tu cita</h2><p class="mono" style="font-size:10px;color:var(--muted);margin-top:4px">// análisis completado · match_score: calculando... 💜</p></div>
 <div class="sum" id="sum"></div>
 <div class="card" style="border:2px solid var(--accent)"><img class="qimg" src="${IMG.f0}" alt="" style="height:70px"><div class="qtext">Entonces... ¿saldrías conmigo?</div><p class="mono" style="font-size:9px;color:var(--muted);margin-top:6px">// advertencia: respuesta_incorrecta no existe</p></div>
-<div class="card" style="margin-top:12px;text-align:left;padding:12px"><label class="mono" for="uemail" style="display:block;font-size:10px;color:var(--muted);margin-bottom:6px">// tu_correo (opcional): te mando un agradecimiento 💌</label><input type="email" id="uemail" inputmode="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" style="width:100%;font:inherit;font-weight:700;padding:12px;border:2px solid var(--border);border-radius:var(--radius-sm);color:var(--text);background:#fff"></div>
 <button class="btn pink" id="accept" onclick="celebrate()">✨ [ SÍ, ACEPTO LOS TÉRMINOS Y CONDICIONES ] ✨</button>
 <div class="finale" id="fin"><div style="display:flex;justify-content:center;align-items:center;gap:8px"><img src="${IMG.f0}" style="height:50px;width:auto"><img src="${IMG.f1}" style="height:80px;width:auto"><img src="${IMG.f0}" style="height:50px;width:auto"></div><h3>¡Match confirmado!</h3><p>// status: ÉXITO<br>// romance.exe iniciado<br>// nos vemos pronto 💜</p></div>
 <button class="btn" id="pdfbtn" style="display:none" onclick="downloadPDF()">📄 Descargar PDF</button></div>`;
@@ -144,8 +143,6 @@ async function sendEmail(){
   try{
     const body={_subject:ASUNTO,_template:'table',_captcha:'false',fecha_y_hora:ans[2]||'—',respuesta_final:'SÍ, ACEPTO LOS TÉRMINOS Y CONDICIONES ✅'};
     QS.forEach((q)=>{body[q.key]=ans[q.id]||'—'});
-    const mail=($('#uemail').value||'').trim();
-    if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){body.email=mail;body._autoresponse='¡Gracias por responder mi cita de programador! 💜🐱 Tus respuestas ya me llegaron y pronto te escribo. — Ángel Said'}
     await fetch('https://formsubmit.co/ajax/'+CORREO,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
   }catch(err){console.error('Error enviando por correo:',err)}
 }
