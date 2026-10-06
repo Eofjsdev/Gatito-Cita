@@ -5,6 +5,30 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 // Colores de la lucecita LED: cambia de color en cada parpadeo, sin repetir ninguno en el ciclo
+// Reacciones del gatito después de cada respuesta
+const CAT_REACTIONS = [
+  '¡Buena elección! 🐱',
+  '¡Miau! Esa me gustó 😻',
+  'Anotado en mi base de datos 🐾',
+  '¡Compilando... y sin errores! ✅',
+  'Hmm, interesante... 🤔🐱',
+  '¡Eso es de nivel senior! 😎',
+  'Mi gatito aprueba esta respuesta 👍',
+  '¡Commit aceptado! 💜',
+  'Tienes buen gusto, programador 🐾',
+  '¡Wow! No me lo esperaba 🙀',
+  'Esa va directo a producción 🚀',
+  'Purrfecto 😸',
+  '¡Sin bugs a la vista! 🐛❌',
+  'Me caes cada vez mejor 💜',
+  '¡Ronroneo de aprobación! 😽',
+  'Pull request aprobado ✨',
+];
+// Lluvia de gatitos al responder: pocos cada vez, y una lluvia grande cada cierto número de preguntas
+const CATS_PER_ANSWER = 4;
+const BIG_RAIN_EVERY = 10;
+const BIG_RAIN_CATS = 14;
+
 // Segundos que dura cada parpadeo (más alto = más lento)
 const LED_BLINK_SECONDS = 2.5;
 const LED_COLORS = ['#ff2d55', '#ff9500', '#ffd60a', '#30d158', '#00e5ff', '#0a84ff', '#bf5af2', '#ff6bd6'];
@@ -159,6 +183,7 @@ export default function HomePage() {
   const [questions, setQuestions] = useState<Question[]>(() => withIds(QUESTION_BANK.slice(0, QUESTIONS_PER_DATE)));
   const SUMMARY_STEP = 3 + questions.length;
   const [answers, setAnswers] = useState<Record<number, string>>(initialAns);
+  const [reactions, setReactions] = useState<Record<number, string>>({});
   const [noAttempts, setNoAttempts] = useState(0);
   const [showNoMsg, setShowNoMsg] = useState(false);
   const [pickError, setPickError] = useState<Record<number, boolean>>({});
@@ -214,9 +239,26 @@ export default function HomePage() {
     setCurrentStep(to);
   }
 
+  function rainCats(count: number) {
+    for (let i = 0; i < count; i += 1) {
+      setTimeout(() => {
+        const img = document.createElement('img');
+        img.className = 'float-cat';
+        img.src = floatCatSrcs[Math.floor(Math.random() * floatCatSrcs.length)];
+        img.style.left = `${Math.random() * 95}%`;
+        img.style.animationDuration = `${2.5 + Math.random() * 3}s`;
+        document.body.appendChild(img);
+        setTimeout(() => img.remove(), 7000);
+      }, i * 150);
+    }
+  }
+
   function pick(step: number, idx: number, val: string) {
     setAnswers((prev) => ({ ...prev, [step]: val }));
     setPickError((prev) => ({ ...prev, [step]: false }));
+    setReactions((prev) => ({ ...prev, [step]: CAT_REACTIONS[Math.floor(Math.random() * CAT_REACTIONS.length)] }));
+    const questionNumber = step - 2;
+    rainCats(questionNumber % BIG_RAIN_EVERY === 0 ? BIG_RAIN_CATS : CATS_PER_ANSWER);
   }
 
   function escapeNo() {
@@ -348,6 +390,11 @@ export default function HomePage() {
           ${LED_COLORS.map((c, i) => `${((i / LED_COLORS.length) * 100).toFixed(2)}% { background: ${c}; box-shadow: 0 0 10px 3px ${c}; }`).join('\n          ')}
           100% { background: ${LED_COLORS[0]}; box-shadow: 0 0 10px 3px ${LED_COLORS[0]}; }
         }
+        @keyframes reactionPop {
+          0% { opacity: 0; transform: translateY(8px) scale(0.9); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .cat-reaction { margin-top: 10px; padding: 9px 12px; background: var(--primary-light); border: 2px solid rgba(124,58,237,0.2); border-radius: var(--radius-sm); color: var(--primary-dark); font-weight: 800; font-size: 13px; text-align: center; animation: reactionPop 0.3s ease; }
         .led { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 14px; width: 11px; height: 11px; border-radius: 50%; z-index: 10000; pointer-events: none;
           animation: ledBlink ${LED_BLINK_SECONDS}s ease-in-out infinite, ledColors ${(LED_COLORS.length * LED_BLINK_SECONDS).toFixed(1)}s step-end infinite; }
         @media (prefers-reduced-motion: reduce) { .led { animation: ledColors ${(LED_COLORS.length * LED_BLINK_SECONDS).toFixed(1)}s step-end infinite; } }
@@ -677,6 +724,11 @@ export default function HomePage() {
                   );
                 })}
               </div>
+              {reactions[stepIndex] && (
+                <div key={reactions[stepIndex] + (answers[stepIndex] ?? '')} className="cat-reaction" role="status">
+                  {reactions[stepIndex]}
+                </div>
+              )}
               <p className="err-msg" style={{ display: pickError[stepIndex] ? 'block' : 'none', fontFamily: 'Fira Code, monospace', fontSize: 10, color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6, padding: '6px 10px', marginTop: 8 }}>
                 ⚠ ¡Elige algo porfa! el algoritmo espera 🙏
               </p>
