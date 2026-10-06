@@ -158,7 +158,6 @@ export default function HomePage() {
   const [showNoMsg, setShowNoMsg] = useState(false);
   const [pickError, setPickError] = useState<Record<number, boolean>>({});
   const [showFinale, setShowFinale] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
   const [selectedPosition, setSelectedPosition] = useState<{ left: string; top: string } | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>('');
@@ -260,14 +259,6 @@ export default function HomePage() {
           fecha_y_hora: answers[2] ?? '—',
           ...Object.fromEntries(questions.map((q) => [q.key, answers[q.id] ?? '—'])),
           respuesta_final: 'SÍ, ACEPTO LOS TÉRMINOS Y CONDICIONES ✅',
-          // Si la persona dejó su correo, FormSubmit le manda un agradecimiento
-          ...(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim())
-            ? {
-                email: userEmail.trim(),
-                _autoresponse:
-                  '¡Gracias por responder mi cita de programador! 💜🐱 Tus respuestas ya me llegaron y pronto te escribo. — Ángel Said',
-              }
-            : {}),
         }),
       });
     } catch (error) {
@@ -713,22 +704,6 @@ export default function HomePage() {
             <p style={{ fontFamily: 'Fira Code, monospace', fontSize: 9, color: 'var(--text-muted)', marginTop: 6 }}>
               // advertencia: respuesta_incorrecta no existe
             </p>
-          </div>
-
-          <div style={{ marginTop: 12, background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', padding: 12, textAlign: 'left' }}>
-            <label htmlFor="user-email" style={{ display: 'block', fontFamily: 'Fira Code, monospace', fontSize: 10, color: 'var(--text-muted)', marginBottom: 6 }}>
-              // tu_correo (opcional): te mando un agradecimiento 💌
-            </label>
-            <input
-              id="user-email"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              placeholder="tucorreo@ejemplo.com"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-              style={{ width: '100%', fontFamily: 'Nunito, sans-serif', fontWeight: 700, fontSize: 14, padding: 12, border: '2px solid var(--border)', borderRadius: 'var(--radius-sm)', color: 'var(--text)', background: '#fff' }}
-            />
           </div>
 
           <button className="btn-next btn-confirm" style={{ width: '100%', background: 'linear-gradient(135deg, var(--accent), #db2777)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '14px 20px', fontFamily: 'Nunito, sans-serif', fontSize: 13, fontWeight: 800, cursor: 'pointer', transition: 'all 0.2s ease', letterSpacing: 0.5, boxShadow: '0 4px 12px rgba(236,72,153,0.3)', marginTop: 12, display: showFinale ? 'none' : 'block' }} onClick={celebrate}>
