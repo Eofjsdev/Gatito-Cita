@@ -4,6 +4,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+// Colores de la lucecita LED: cambia de color en cada parpadeo, sin repetir ninguno en el ciclo
+// Segundos que dura cada parpadeo (más alto = más lento)
+const LED_BLINK_SECONDS = 2.5;
+const LED_COLORS = ['#ff2d55', '#ff9500', '#ffd60a', '#30d158', '#00e5ff', '#0a84ff', '#bf5af2', '#ff6bd6'];
+
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 const asset = (path: string) => `${BASE_PATH}${path}`;
 
@@ -334,6 +339,20 @@ export default function HomePage() {
 
   return (
     <main className="app" style={{ width: '100%', maxWidth: 560, margin: '0 auto', minHeight: '100vh', padding: '16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <style>{`
+        @keyframes ledBlink {
+          0%, 100% { opacity: 0.15; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes ledColors {
+          ${LED_COLORS.map((c, i) => `${((i / LED_COLORS.length) * 100).toFixed(2)}% { background: ${c}; box-shadow: 0 0 10px 3px ${c}; }`).join('\n          ')}
+          100% { background: ${LED_COLORS[0]}; box-shadow: 0 0 10px 3px ${LED_COLORS[0]}; }
+        }
+        .led { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 14px; width: 11px; height: 11px; border-radius: 50%; z-index: 10000; pointer-events: none;
+          animation: ledBlink ${LED_BLINK_SECONDS}s ease-in-out infinite, ledColors ${(LED_COLORS.length * LED_BLINK_SECONDS).toFixed(1)}s step-end infinite; }
+        @media (prefers-reduced-motion: reduce) { .led { animation: ledColors ${(LED_COLORS.length * LED_BLINK_SECONDS).toFixed(1)}s step-end infinite; } }
+      `}</style>
+      <span className="led" aria-hidden="true" />
       <div style={{ width: '100%' }}>
         <div className="header" style={{ textAlign: 'center', marginBottom: 20, animation: 'fadeDown 0.6s ease' }}>
           <img src={asset('/memes/gatito1.png')} alt="gatito1" style={{ width: 100, height: 'auto', borderRadius: 16, display: 'block', margin: '0 auto 12px', filter: 'drop-shadow(0 0 20px rgba(192, 132, 252, 0.5))' }} />
@@ -341,7 +360,7 @@ export default function HomePage() {
             ¿Saldrías conmigo?
           </h1>
            <p style={{ fontFamily: 'Fira Code, monospace', fontSize: 10, color: 'var(--text-muted)', marginTop: 4 }}>
-             // ejecutando: peticion_romantica_v2.0.cat
+             // ejecutando: cita.deploy()
            </p>
         </div>
 
@@ -753,7 +772,7 @@ export default function HomePage() {
               </div>
               <p style={{ fontSize: 9, color: '#6b7280', textAlign: 'center', lineHeight: 1.6 }}>
                 Nos vemos pronto, mi nerd favorit@ 💜<br />
-                <span style={{ fontSize: 8 }}>// generado por peticion_romantica_v2.0.cat</span>
+                <span style={{ fontSize: 8 }}>// generado por cita.deploy()</span>
               </p>
             </div>
           </div>
