@@ -9,8 +9,8 @@ const asset = (path: string) => `${BASE_PATH}${path}`;
 
 type Question = { id: number; key: string; icon: string; tag: string; text: string; options: string[] };
 
-// Cuántas preguntas salen en cada cita (hay 100 en total y salen al azar). Pon 100 para que salgan todas.
-const QUESTIONS_PER_DATE = 20;
+// Cuántas preguntas salen en cada cita (hay 100 en total, en orden al azar). Pon un número menor si quieres menos.
+const QUESTIONS_PER_DATE = 100;
 
 const QUESTION_BANK: Question[] = [
   {"id": 3, "key": "lenguaje", "icon": "💻", "tag": "// módulo: lenguaje_favorito.ts", "text": "💻 ¿Con qué lenguaje de programación compilamos esta cita?", "options": ["🐍 Python — simple, legible y sin llaves", "🟨 JavaScript — funciona... hasta que no 🤡", "⚙️ C++ — poder total, memory leaks incluidos", "☕ Java — verboso pero de confianza"]},
