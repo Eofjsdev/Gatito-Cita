@@ -49,10 +49,15 @@ input[type=date],input[type=time]{width:100%;font:inherit;font-weight:700;paddin
 .finale h3{font-size:18px;font-weight:900;color:var(--green);margin:8px 0 6px}
 .finale p{font-family:'Fira Code',monospace;font-size:10px;color:#065f46;line-height:1.6}
 .cat{position:fixed;height:90px;width:auto;pointer-events:none;animation:rain linear forwards;z-index:9999;top:-120px}
+@keyframes ledBlink{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes ledColors{0.00%{background:#ff2d55;box-shadow:0 0 10px 3px #ff2d55} 12.50%{background:#ff9500;box-shadow:0 0 10px 3px #ff9500} 25.00%{background:#ffd60a;box-shadow:0 0 10px 3px #ffd60a} 37.50%{background:#30d158;box-shadow:0 0 10px 3px #30d158} 50.00%{background:#00e5ff;box-shadow:0 0 10px 3px #00e5ff} 62.50%{background:#0a84ff;box-shadow:0 0 10px 3px #0a84ff} 75.00%{background:#bf5af2;box-shadow:0 0 10px 3px #bf5af2} 87.50%{background:#ff6bd6;box-shadow:0 0 10px 3px #ff6bd6} 100%{background:#ff2d55;box-shadow:0 0 10px 3px #ff2d55}}
+.led{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:14px;width:11px;height:11px;border-radius:50%;z-index:10000;pointer-events:none;animation:ledBlink 2.5s ease-in-out infinite,ledColors 20.0s step-end infinite}
+@media (prefers-reduced-motion:reduce){.led{animation:ledColors 20.0s step-end infinite}}
 #pdf{position:absolute;left:-9999px;top:0;width:148mm;background:#fff;font-family:'Nunito',sans-serif;padding:18px}
 </style>
 </head>
 <body>
+<span class="led" aria-hidden="true"></span>
 <div class="wrap" id="app"></div>
 <p class="mono" style="text-align:center;font-size:10px;color:var(--muted);padding:0 0 24px">Hecho con 💜 por Ángel Said · <a href="https://github.com/Eofjsdev" style="color:var(--primary)">@Eofjsdev</a></p>
 <div id="cats"></div>
@@ -83,7 +88,7 @@ const $ = (s) => document.querySelector(s);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 let html = '';
-html += `<div class="step active" id="s0"><div class="hero"><img src="${IMG.landing}" alt=""><h1>¿Saldrías conmigo?</h1><p class="sub mono">// ejecutando: peticion_romantica_v2.0.cat</p></div>
+html += `<div class="step active" id="s0"><div class="hero"><img src="${IMG.landing}" alt=""><h1>¿Saldrías conmigo?</h1><p class="sub mono">// ejecutando: cita.deploy()</p></div>
 <div class="plea"><img src="${IMG.c5}" alt=""><div><b>Antes de responder... ¡responde esto primero! 🥺</b><p class="mono" style="font-size:10px;color:#8b5cf6;margin-top:4px">/* se requiere una respuesta para continuar */</p></div></div>
 <button class="btn" onclick="go(1)">[ INICIAR PROTOCOLO → ]</button></div>`;
 
@@ -159,7 +164,7 @@ async function downloadPDF(){
   $('#pdf').innerHTML=`<div style="text-align:center"><img src="${IMG.landing}" style="height:90px;width:auto;margin:0 auto 10px"><h1 style="font-size:20px;color:#7c3aed;margin:0 0 4px">💜 ¡Cita Confirmada! 💜</h1><p style="font-size:10px;color:#6b7280;margin:0 0 16px">// romance.exe iniciado correctamente</p></div>
   <div style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden"><div style="background:#f3e8ff;padding:10px 14px;font-weight:800;font-size:11px;color:#7c3aed">📋 Resumen de tu cita</div>
   ${items().map((x,i)=>`<div style="padding:10px 14px;border-top:1px solid #e5e7eb;${i%2?'background:#f9fafb':''}"><span style="font-size:9px;color:#6b7280">${x.i} ${esc(x.k)}:// </span><span style="font-size:10px;font-weight:700">${esc(x.v)}</span></div>`).join('')}</div>
-  <p style="font-size:9px;color:#6b7280;text-align:center;line-height:1.6;margin-top:14px">Nos vemos pronto, mi nerd favorit@ 💜<br><span style="font-size:8px">// generado por peticion_romantica_v2.0.cat</span></p>`;
+  <p style="font-size:9px;color:#6b7280;text-align:center;line-height:1.6;margin-top:14px">Nos vemos pronto, mi nerd favorit@ 💜<br><span style="font-size:8px">// generado por cita.deploy()</span></p>`;
   try{
     const canvas=await html2canvas($('#pdf'),{scale:2,useCORS:true,backgroundColor:'#ffffff'});
     const w=148,h=canvas.height*w/canvas.width;
