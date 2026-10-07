@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 export const metadata: Metadata = {
-  title: '¿Saldrías conmigo? 🐱',
+  title: '¿Hacemos deploy de una cita? 🐱',
   description: 'Cita nerd con estilo meme y gatitos.',
   manifest: `${basePath}/manifest.json`,
   icons: {
