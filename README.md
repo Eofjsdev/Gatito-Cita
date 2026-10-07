@@ -1,4 +1,4 @@
-# 🐱 ¿Saldrías conmigo? — Cita con Gatitos
+# 🐱 ¿Hacemos deploy de una cita? — Cita con Gatitos
 
 > _Una aplicación interactiva para pedir una cita de forma creativa, con preguntas de programador y memes de gatitos._
 
