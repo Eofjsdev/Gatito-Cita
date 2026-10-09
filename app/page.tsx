@@ -656,6 +656,79 @@ export default function HomePage() {
     void sendByEmail(folioValue, issued);
   }
 
+  // ---- Calendario: datos del evento a partir de la fecha y hora elegidas ----
+  function calendarEvent() {
+    if (!selectedDate || !selectedTime) return null;
+    const [hh, mm] = selectedTime.split(':').map((v) => parseInt(v, 10));
+    const start = new Date(selectedDate);
+    start.setHours(hh || 0, mm || 0, 0, 0);
+    const end = new Date(start.getTime() + 2 * 60 * 60 * 1000); // duración: 2 horas
+    const two = (v: number) => String(v).padStart(2, '0');
+    // Hora local "flotante" (sin zona): se queda a la hora que elegiste en tu calendario
+    const fmt = (d: Date) =>
+      `${d.getFullYear()}${two(d.getMonth() + 1)}${two(d.getDate())}T${two(d.getHours())}${two(d.getMinutes())}00`;
+    return {
+      title: `💜 Cita #${folio} — ¿Hacemos deploy?`,
+      details: 'Cita confirmada con gatitos 🐱 // romance.exe iniciado',
+      start: fmt(start),
+      end: fmt(end),
+    };
+  }
+
+  function downloadICS() {
+    const ev = calendarEvent();
+    if (!ev) return;
+    const esc = (t: string) => t.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Gatito-Cita//ES',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:cita-${folio}-${ev.start}@gatito-cita`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART:${ev.start}`,
+      `DTEND:${ev.end}`,
+      `SUMMARY:${esc(ev.title)}`,
+      `DESCRIPTION:${esc(ev.details)}`,
+      'BEGIN:VALARM',
+      'TRIGGER:-P1D',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Mañana es la cita 💜',
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT1H',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:La cita es en 1 hora 🐱',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ];
+    const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'cita-confirmada.ics';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function openGoogleCalendar() {
+    const ev = calendarEvent();
+    if (!ev) return;
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: ev.title,
+      dates: `${ev.start}/${ev.end}`,
+      details: ev.details,
+    });
+    window.open(`https://calendar.google.com/calendar/render?${params.toString()}`, '_blank', 'noopener,noreferrer');
+  }
+
   async function downloadPDF() {
     const element = document.getElementById('pdf-confirmation');
     if (!element) return;
@@ -672,6 +745,7 @@ export default function HomePage() {
       });
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save('cita-confirmada.pdf');
+      downloadICS(); // junto con el PDF se descarga el evento para el calendario
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
@@ -1156,6 +1230,9 @@ export default function HomePage() {
           <div style={{ display: showFinale ? 'flex' : 'none', gap: 8, marginTop: 12 }}>
             <button onClick={downloadPDF} style={{ flex: 1, background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '12px 16px', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 12px rgba(124,58,237,0.3)' }}>
               📄 Descargar PDF
+            </button>
+            <button onClick={openGoogleCalendar} style={{ flex: 1, background: 'var(--accent)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '12px 16px', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 12px rgba(236,72,153,0.3)' }}>
+              📅 Google Calendar
             </button>
           </div>
 
