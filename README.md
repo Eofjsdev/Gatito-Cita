@@ -2,7 +2,7 @@
 
 > _Una invitación interactiva para pedir una cita de forma original: fecha y hora, un banco de 100 preguntas de programador, gatitos pixel que te acompañan, PDF de la cita confirmada, evento para el calendario y aviso por correo._
 
-**Hecho por [Ángel Said](https://github.com/Eofjsdev)** 💜 — CEO y fundador de Michihub
+**Hecho por [Ángel Said](https://github.com/Eofjsdev)** 💜 
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-18.3.1-blue?style=flat-square&logo=react)](https://react.dev/)
