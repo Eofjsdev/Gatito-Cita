@@ -13,7 +13,7 @@
 
 ## 📖 Descripción
 
-**¿Hacemos deploy de una cita?** es una aplicación web móvil-first que convierte una invitación a salir en una pequeña experiencia con humor nerd. La persona invitada recorre un flujo guiado: acepta la propuesta (aunque el botón **"No"** se escapa cuando intenta tocarlo 😹), elige **fecha y hora**, responde preguntas de programador (lenguaje favorito, editor, tabs vs spaces, bugs, deploy y muchas más) y al final confirma la cita.
+**¿Hacemos deploy de una cita?** es una aplicación web móvil-first que convierte una invitación a salir en una pequeña experiencia con humor La persona invitada recorre un flujo guiado: acepta la propuesta (aunque el botón **"No"** se escapa cuando intenta tocarlo 😹), elige **fecha y hora**, responde preguntas de programador (lenguaje favorito, editor, tabs vs spaces, bugs, deploy y muchas más) y al final confirma la cita.
 
 Todo el tiempo la acompañan unos **gatitos pixel** que reaccionan a cada respuesta, la animan en los momentos clave y llenan la pantalla de gatitos al confirmar. Al terminar se genera un **PDF con folio**, un **evento para el calendario** y quien invitó recibe las respuestas por **correo**.
 
