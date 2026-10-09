@@ -197,39 +197,100 @@ const NOTIFY_EMAIL = 'cruzangelsaid34@gmail.com';
 const initialAns: Record<number, string> = {};
 
 // ===== Gatitos pixelados que caminan por la parte de abajo (como las mascotas de VS Code) =====
+// El gatito blanco lleva gorrito, y el celeste es el programador: va a su escritorio con monitores y VS Code.
 const PET_FRAMES: Record<string, Record<string, string>> = {
   blanco: {
-    walk1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVR42mNgGGjASKzCmOSq/wwMDAxL5rYxIvNZSLFtsbEBAwMDRONiYwOG2LMXECYR44Jfv/6g4Jjkqv9MDAwMDL9+/flPiktUVIzgbBZ0PxID7tw5B/cSSoDMm96EU1NSZh3pfsTmZ3R9GLHw5MUnrBbISPDhTwekhAEsLWAAmDPRnYtLnIGBgYGJqkkZ3XT0ZEvQCwMCAGwafRmBaKItAAAAAElFTkSuQmCC',
-    walk2: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAkUlEQVR42mNgGGjASKzCmOSq/wwMDAxL5rYxIvNZSLFtsbEBAwMDRONiYwOG2LMXECYR44Jfv/6g4Jjkqv9MDAwMDL9+/flPiktUVIzgbBZ0PxID7tw5B/cSSoDMm96EU1NSZh3pfsTmZ3R9GLHw5MUnrBbISPBhFWchyZnEAJhTcdHo6pmonpQJRScsKQ8eAAAxznZl1VtHzQAAAABJRU5ErkJggg==',
-    stand: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVR42mNgGGjASKzCmOSq/wwMDAxL5rYxIvNZSLFtsbEBAwMDRONiYwOG2LMXECYR44Jfv/6g4Jjkqv9MDAwMDL9+/flPiktUVIzgbBZ0PxID7tw5B/cSSoDMm96EU1NSZh3pfsTmZ3R9GLHw5MUnrBbISPDhTwekhAEsLWAFMKciOxmbGAwwUT0po9uwZG4bIzYxhkEDACrifRn/c4BFAAAAAElFTkSuQmCC',
-    sit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAnUlEQVR42mNgoCWISa76H5Nc9R8Xn4GBgYGFkCGLjQ0YGBggmhYbGzDEnr3AQJIBv1OCGOalBEHYDAwMDGgGMBHrHRUVI6ziRBtw5845JC+R4IWkzDq88ozYQh6X4iVz2zDUY3XBvOlNRLuEidK0woLL+U9efCLKACZkzdj8SHKy/fXrz/9fv/78v/foHRzDxLAFMCOxMYAvJgYWAADP/E7LGXeT3AAAAABJRU5ErkJggg==',
-    lie: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAiklEQVR42mNgGAUDDxiJVRiTXPWfgYGBYcncNkZkPgspti02NmBgYIBoXGxswBB79gLCAJiJ+MDvlCCGeSlBEDYDAwMDsgEMDAwM86Y34dSclFkHZ6uoGDHcuXOOgYGBgYGJGJvRAUzzYmMDzDB48uITUa5AiQViXQHzYlJmHTw2SI5GGIAZMPAAAHC8Lm1lzXOSAAAAAElFTkSuQmCC',
+    walk1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAtUlEQVR42mNgIBH8hwIYn5EUzdMkdP57ScozMDAwMGx7/pAh68UVRpI0o4NpEjr/iTYhJrnq/2JjA4bYsxcYGBgYGODsmOSq/8Qa8OvXHxQck1z1n4mBgYHh168//0kJCxUVIzibBdkGYg24c+cc3BuMyJrnTW/CqSkps450P2LzM7o+FnSBJy8+YbVARoIPqzgjOWGwZG4b9uiHORPdubjEGRgYGJgYKASM6AGJzam4xAcHAACwl5wxUb178gAAAABJRU5ErkJggg==',
+    walk2: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVR42mNgIBH8hwIYn5EUzdMkdP57ScozMDAwMGx7/pAh68UVRpI0o4NpEjr/iTYhJrnq/2JjA4bYsxcYGBgYGODsmOSq/8Qa8OvXHxQck1z1n4mBgYHh168//0kJCxUVIzibBdkGYg24c+cc3BuMyJrnTW/CqSkps450P2LzM7o+FnSBJy8+YbVARoIPqzgLSc4kBsCciotGV89EqYWM2AITn4Ylc9sYGQYVAAB2S5V9v0mahQAAAABJRU5ErkJggg==',
+    stand: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAs0lEQVR42mNgIBH8hwIYn5EUzdMkdP57ScozMDAwMGx7/pAh68UVRpI0o4NpEjr/iTYhJrnq/2JjA4bYsxcYGBgYGODsmOSq/8Qa8OvXHxQck1z1n4mBgYHh168//0kJCxUVIzibBdkGYg24c+cc3BuMyJrnTW/CqSkps450P2LzM7o+FnSBJy8+YbVARoIPqzgjOWGwZG4b7uiHORXZydjEYICJgULAiC0w0Z2LTYxh0AAAb1+cMQ3iq4oAAAAASUVORK5CYII=',
+    sit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0klEQVR42mNgoBAwElIwTULnv5ekPAMDAwPDtucPGbJeXGEk2vRpEjr/0cE0CZ3/yGpY8BlwzNuPIXP6aobYsxcYGBgYGBYbGzAc8/ZjYJh7hTgDGBgYGH6nBDHMSwmCsBkYGBighsEAE7HeUVExwipOtAF37pyDe4PoMGBgYGBIyqwjLRpjkqv+41K8ZG4bhnqsLpg3vYlolzBRmhJZcDn/yYtPRBnAhKwZmx+JBjHJVf9jkqv+//r15/+vX3/+33v0Do5hYtgCmJHYGMAXExQBAGxUY+mEgSAIAAAAAElFTkSuQmCC',
+    lie: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAApklEQVR42mNgGAUkg/9QAOMzkqJ5moTOfy9JeQYGBgaGbc8fMmS9uMJIkmZ0ME1C5z/RJsQkV/1fbGzAEHv2AgMDAwMDjM2CrICQIb9TghjmpQRB2AwMDAzIBjAwMDDMm96EU3NSZh2craJixHDnzjkGBgYGBiZibEYHMM2LjQ1QXcDAwMDw5MUnolyBEo3EugLmxaTMOoYlc9sYSUoH6JbADBh4AAAfCE2FKzLApwAAAABJRU5ErkJggg==',
   },
   celeste: {
-    walk1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsElEQVR42mNgGGjASKxCk5hp/xkYGBjOLMliROazkGLbaSsRBlMGiMbTViIMpsfeMLCYxEz7DzOVEJiu58KQpAdlMzAwMBxbwcDEwMDAMO3Iu/+kuKQuyg/OZkH3IzGgadkmuJdQAiQpIwKnpnkzVuCPBZOYaf/xGQAzBD28MGLBQokHq+YT974QdgGxYYAz1qYdefffJGbafxhNSJyBgQESjVRLyuimoydbgl4YEAAAqsZOGvLFyfkAAAAASUVORK5CYII=',
-    walk2: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVR42mNgGGjASKxCk5hp/xkYGBjOLMliROazkGLbaSsRBlMGiMbTViIMpsfeMLCYxEz7DzOVEJiu58KQpAdlMzAwMBxbwcDEwMDAMO3Iu/+kuKQuyg/OZkH3IzGgadkmuJdQAiQpIwKnpnkzVuCPBZOYaf/xGQAzBD28MGLBQokHq+YT975gFWdBt2EeiQmJCcY4sySL8cySLEaYN3DROA2gWlImFJ3EJjr6AQAxIzspbL38AgAAAABJRU5ErkJggg==',
-    stand: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVR42mNgGGjASKxCk5hp/xkYGBjOLMliROazkGLbaSsRBlMGiMbTViIMpsfeMLCYxEz7DzOVEJiu58KQpAdlMzAwMBxbwcDEwMDAMO3Iu/+kuKQuyg/OZkH3IzGgadkmuJdQAiQpIwKnpnkzVuCPBZOYaf/xGQAzBD28MGLBQokHq+YT974QdgGxYYA31qYdefffJGbafxiNSwwGmKielNFtOLMkixGbGMOgAQBvZk4azDXqDQAAAABJRU5ErkJggg==',
-    sit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAoElEQVR42mNgoCUwiZn23yRm2n9cfAYGBgYWQoacthJhMGWAaDptJcJgeuwNA0kGTNdzYUjSg7IZGBgYjq1AkWci1jt1UX5YxYk2oGnZJriXSPLCvBmoTp6HJs+ILeRxGXZmSRaGeqwuSMqIIOgSksMAF2DB5XwLJR68fsdwgUnMtP/Y/EgIMKG7AJv/T9z7wpCUEYE1gBmJjQF8MTGwAABVejQcJCcEqQAAAABJRU5ErkJggg==',
-    lie: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAgElEQVR42mNgGAUDDxiJVWgSM+0/AwMDw5klWYzIfBZSbDttJcJgygDReNpKhMH02BuEC2Am4gNJGREo/HkzVqC6AF0BumIYqIvyY2hatomBgYGBgYkYm9EBTPNpKxHMMLBQ4sHuAjRXwMQYifU/shfnzVgBjw2SoxEGYAYMPAAARiAq2EaQLR0AAAAASUVORK5CYII=',
+    walk1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVR42mNgGGjASKxCk5hp/5kfbEIR+6vgx8BCrAHMDzYxnIhKYjA99oaBgYGB4bSVCIPpsTcMjCYx0/6fWZKF1yXmNh7/GRgYGOI7lqGIz5uxgoGJgYGBYdqRd//xGeDo4onCr4vyg7NZkP2Iy4D9e1D93rRsE9wbjMiakzIicLpi3owV+GPBJGbaf3wGwAxBDy+MWLBQ4sGq+cS9L4RdQGyU4oy1aUfe/TeJmfYfRhMSZ2BggEQj1ZIyuukwp+ISHxwAALCXU7b2lOEDAAAAAElFTkSuQmCC',
+    walk2: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAx0lEQVR42mNgGGjASKxCk5hp/5kfbEIR+6vgx8BCrAHMDzYxnIhKYjA99oaBgYGB4bSVCIPpsTcMjCYx0/6fWZKF1yXmNh7/GRgYGOI7lqGIz5uxgoGJgYGBYdqRd//xGeDo4onCr4vyg7NZkP2Iy4D9e1D93rRsE9wbjMiakzIicLpi3owV+GPBJGbaf3wGwAxBDy+MWLBQ4sGq+cS9L1jFWdBtmEdiQmKCMc4syWI8sySLEeYNXDROA6iWlPFFJ8ylDIMKAAA29EDFBzCN7AAAAABJRU5ErkJggg==',
+    stand: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxklEQVR42mNgGGjASKxCk5hp/5kfbEIR+6vgx8BCrAHMDzYxnIhKYjA99oaBgYGB4bSVCIPpsTcMjCYx0/6fWZKF1yXmNh7/GRgYGOI7lqGIz5uxgoGJgYGBYdqRd//xGeDo4onCr4vyg7NZkP2Iy4D9e1D93rRsE9wbjMiakzIicLpi3owV+GPBJGbaf3wGwAxBDy+MWLBQ4sGq+cS9L4RdQGyU4o21aUfe/TeJmfYfRuMSgwEmqidldBvOLMlixCbGMGgAAHU3U7ZSVcKeAAAAAElFTkSuQmCC',
+    sit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAuUlEQVR42mNgGGjAiE/SJGbaf+YHm1DE/ir4MZxZkgXXx4LPAOYHmxhORCUxmB57w8DAwMBw2koEziZogLmNx38GBgaG6XouDEl6ELHpDAwMDMdWoKhjwmWAo4snCr8uyg+rOpwG7N+zHYXftGwT3BskBSI2ceRAZCRWE7pGvIGYlBGBITZvxgrSwoBYwILL+RZKPKguwGEAE7JmbH4kBJjQXYDN/yfufWFIyojAGsCMxMYAvpigCAAANzg64UdIKJoAAAAASUVORK5CYII=',
+    lie: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAp0lEQVR42mNgGAUDDxiJVWgSM+0/84NNKGJ/FfwYWIg1gPnBJoYTUUkMpsfeMDAwMDCcthJhMD32BuECk5hp//FpZmBgYIjvWIYiPm/GClQXJGVEYDXg0Z7fDPv3bIfz66L8GJqWQQxlwmczDCBrZmBggGs+bSWCGQYWSjwYBlis2sSQVjaHYd6MFahegMUCMa5A9uK8GSsYzizJYiQ5GpH5MAMGHgAArOE1gpNb/1sAAAAASUVORK5CYII=',
   },
   naranja: {
     walk1: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArElEQVR42mNgGGjASKzCdg+R/wwMDAyVO94wIvOZSLGtwqqJod1D5H+7h8j/CqsmBgYGBgaWdg+R/zBTCYGvCocZchVcIWyGwwwMx6Au+LIo8j8pLjEp2whns6D7kRhwpssf7iWUAMmNcsWpafKy3fhjod1D5D8+A2CGoIcXC7oibpNA7AF4Zj1hFxAbBjhj7cuiyP/tHiL/YTQhcZITEsGkjG46erIl6IUBAQBM7Ux0GkXLtgAAAABJRU5ErkJggg==',
     walk2: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVR42mNgGGjASKzCdg+R/wwMDAyVO94wIvOZSLGtwqqJod1D5H+7h8j/CqsmBgYGBgaWdg+R/zBTCYGvCocZchVcIWyGwwwMx6Au+LIo8j8pLjEp2whns6D7kRhwpssf7iWUAMmNcsWpafKy3fhjod1D5D8+A2CGoIcXC7oibpNA7AF4Zj1WcRYMZ+JwKi4ATweVO94wVu54wwjzBi4apwFUS8qEopPYREc/AAAaOzz6K2x7UwAAAABJRU5ErkJggg==',
     stand: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAr0lEQVR42mNgGGjASKzCdg+R/wwMDAyVO94wIvOZSLGtwqqJod1D5H+7h8j/CqsmBgYGBgaWdg+R/zBTCYGvCocZchVcIWyGwwwMx6Au+LIo8j8pLjEp2whns6D7kRhwpssf7iWUAMmNcsWpafKy3fhjod1D5D8+A2CGoIcXC7oibpNA7AF4Zj1hFxAbBnhj7cuiyP/tHiL/YTQuMRhgonpSRrehcscbRmxiDIMGAAAWbUx0lBIzJwAAAABJRU5ErkJggg==',
-    sit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVR42mNgoCVo9xD53+4h8h8Xn4GBgYGJkCEVVk1wjRVWTRjyLIQM+KpwmCFXwRXCZjjMwHAMVZ6JWO+YlG3EKk60AWe6/OFeIskLk5ftRhNB5TNiC3lchlXueMNIVCDmRrkS4RISwwAXYMHlfG6TQFSVhFzQ7iHyH5sfCQEmdBdg8//XM+sZcqNcsQYwI7ExgC8mBhYAADdFNP1zTxkWAAAAAElFTkSuQmCC',
+    sit: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVR42mNgGNSg3UPkf7uHyH9cfAYGBgYmQoZUWDXBNVZYNWHIsxAy4KvCYYZcBVcIm+EwA8MxVHkmYr1jUrYRqzjRBpzp8od7iSQvTF62G00Elc+ILeRxGVa54w0jUYGYG+VKhEtIDANcgAWX87lNAlFVEnJBu4fIf2x+JASY0F2Azf9fz6xnyI1yxRrAjMTGAL6YoAgAAMJ3NP3DmU8MAAAAAElFTkSuQmCC',
     lie: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVR42mNgGAUDDxiJVdjuIfKfgYGBoXLHG0ZkPhMptlVYNTG0e4j8b/cQ+V9h1cTAwMDAwIJuAz7wVeEwQ66CK4TNcJiB4RiSAQwMDAy5Ua44NU9ethvONinbyHCmy5+BgYGBgYkYm9EBTHOFVROqCxgYGBi4TQKx61q2G8UVELCbgZFY/yN7cfKy3fDYIDkaYQBmwMADAGXKLYfgVlEOAAAAAElFTkSuQmCC',
   },
 };
 const PET_COLORS = ['blanco', 'celeste', 'naranja'];
 const PET_SIZE = 48; // sprite de 16 px ampliado x3
 
-type PetMode = 'walk' | 'sit' | 'lie' | 'climb';
-type Pet = { x: number; y: number; dir: 1 | -1; mode: PetMode; until: number; wall: 'l' | 'r' | null; climbDir: 1 | -1 };
+// Escritorio del gatito programador (se dibuja en un canvas de 64x34 px, ampliado x2)
+const STATION_X = 6;
+const STATION_W = 128;
+const STATION_H = 68;
+const DESK_SEAT_X = STATION_X + STATION_W - 2; // donde se sienta el gatito programador
+
+const CODE_COLORS = ['#c586c0', '#dcdcaa', '#ce9178', '#4ec9b0', '#6a9955', '#9cdcfe', '#569cd6'];
+const TERM_COLORS = ['#30d158', '#d4d4d4', '#9cdcfe', '#dcdcaa'];
+type CodeLine = { indent: number; segs: { len: number; color: string }[] };
+type TermLine = { len: number; color: string; prompt: boolean };
+
+const randInt = (a: number, b: number) => Math.floor(a + Math.random() * (b - a + 1));
+const newCodeLine = (): CodeLine => ({
+  indent: randInt(0, 3),
+  segs: Array.from({ length: randInt(1, 3) }, () => ({ len: randInt(2, 6), color: CODE_COLORS[randInt(0, CODE_COLORS.length - 1)] })),
+});
+const newTermLine = (): TermLine => ({ len: randInt(3, 14), color: TERM_COLORS[randInt(0, TERM_COLORS.length - 1)], prompt: Math.random() < 0.4 });
+
+function drawStation(ctx: CanvasRenderingContext2D, now: number, code: CodeLine[], term: TermLine[]) {
+  const r = (x: number, y: number, w: number, h: number, c: string) => { ctx.fillStyle = c; ctx.fillRect(x, y, w, h); };
+  ctx.clearRect(0, 0, 64, 34);
+  // escritorio
+  r(0, 26, 64, 2, '#8b5a2b'); r(0, 28, 64, 1, '#6b4423'); r(2, 29, 2, 5, '#6b4423'); r(60, 29, 2, 5, '#6b4423');
+  // torre de la computadora
+  r(55, 5, 8, 21, '#3a3f4b'); r(56, 7, 6, 1, '#1f232b'); r(56, 9, 6, 1, '#1f232b'); r(56, 11, 6, 2, '#2b303b');
+  r(58, 22, 2, 1, Math.floor(now / 400) % 2 ? '#30d158' : '#1d5c33');
+  // monitor 1: Visual Studio Code con líneas de código
+  r(2, 7, 25, 18, '#2b2f3a'); r(3, 8, 23, 14, '#1e1e1e'); r(12, 25, 5, 1, '#444444');
+  r(3, 8, 23, 1, '#3c3c3c');
+  r(3, 9, 2, 12, '#333333');
+  [10, 13, 16].forEach((y) => r(3, y, 2, 2, '#858585'));
+  r(3, 21, 23, 1, '#007acc');
+  code.forEach((ln, i) => {
+    let x = 6 + ln.indent * 2;
+    const y = 10 + i * 2;
+    ln.segs.forEach((sg) => {
+      const w = Math.min(sg.len, 25 - x);
+      if (w > 0) r(x, y, w, 1, sg.color);
+      x += sg.len + 1;
+    });
+  });
+  const last = code[code.length - 1];
+  if (last && Math.floor(now / 450) % 2 === 0) {
+    let x = 6 + last.indent * 2;
+    last.segs.forEach((sg) => { x += sg.len + 1; });
+    if (x < 25) r(x, 10 + (code.length - 1) * 2, 1, 1, '#ffffff');
+  }
+  // monitor 2: terminal
+  r(29, 7, 25, 18, '#2b2f3a'); r(30, 8, 23, 14, '#0c0c0c'); r(39, 25, 5, 1, '#444444');
+  r(30, 8, 23, 1, '#3c3c3c');
+  term.forEach((t, i) => {
+    const y = 10 + i * 2;
+    if (t.prompt) r(31, y, 1, 1, '#bd93f9');
+    r(33, y, Math.min(t.len, 18), 1, t.color);
+  });
+  // teclado
+  r(18, 24, 20, 1, '#94a3b8'); r(18, 25, 20, 1, '#cbd5e1');
+}
+
+type PetMode = 'walk' | 'sit' | 'lie' | 'climb' | 'goDesk' | 'code';
+type Pet = { x: number; y: number; dir: 1 | -1; mode: PetMode; until: number; wall: 'l' | 'r' | null; climbDir: 1 | -1; codeAt: number };
 
 function PixelPets({ message, msgKey }: { message: string | null; msgKey: string }) {
   const petEls = useRef<(HTMLImageElement | null)[]>([]);
   const ballEl = useRef<HTMLDivElement | null>(null);
   const bubbleEl = useRef<HTMLDivElement | null>(null);
+  const stationEl = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -238,16 +299,23 @@ function PixelPets({ message, msgKey }: { message: string | null; msgKey: string
     window.addEventListener('resize', onResize);
 
     const rand = (a: number, b: number) => a + Math.random() * (b - a);
+    const t0 = performance.now();
     const pets: Pet[] = PET_COLORS.map((_, i) => ({
       x: rand(10, Math.max(20, W - PET_SIZE - 10)) * (0.3 + i * 0.3),
       y: 0,
       dir: Math.random() < 0.5 ? 1 : -1,
       mode: 'walk',
-      until: performance.now() + rand(1500, 4000),
+      until: t0 + rand(1500, 4000),
       wall: null,
       climbDir: 1,
+      codeAt: t0 + rand(4000, 8000),
     }));
-    const ball = { on: false, x: 0, y: 0, vx: 0, vy: 0, until: 0, nextAt: performance.now() + 6000 };
+    const ball = { on: false, x: 0, y: 0, vx: 0, vy: 0, until: 0, nextAt: t0 + 6000 };
+
+    const ctx = stationEl.current ? stationEl.current.getContext('2d') : null;
+    const code: CodeLine[] = Array.from({ length: 5 }, newCodeLine);
+    const term: TermLine[] = Array.from({ length: 5 }, newTermLine);
+    let lastLine = t0;
 
     const draw = (i: number, frame: string, color: string) => {
       const el = petEls.current[i];
@@ -265,11 +333,13 @@ function PixelPets({ message, msgKey }: { message: string | null; msgKey: string
 
     if (reduce) {
       pets.forEach((p, i) => { p.mode = 'sit'; p.x = 20 + i * 70; draw(i, 'sit', PET_COLORS[i]); });
+      pets[1].x = DESK_SEAT_X; pets[1].dir = -1; draw(1, 'sit', PET_COLORS[1]);
+      if (ctx) drawStation(ctx, 0, code, term);
       return () => window.removeEventListener('resize', onResize);
     }
 
     let raf = 0;
-    let last = performance.now();
+    let last = t0;
     const tick = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
@@ -310,7 +380,30 @@ function PixelPets({ message, msgKey }: { message: string | null; msgKey: string
           draw(i, Math.floor(now / 220) % 2 ? 'walk1' : 'walk2', color);
           return;
         }
-        if (ball.on && ball.y < 70) {
+        // El gatito celeste (programador) va a su escritorio a programar de vez en cuando
+        if (i === 1) {
+          if (p.mode === 'code') {
+            p.dir = -1;
+            p.x = DESK_SEAT_X;
+            p.y = Math.floor(now / 170) % 2; // tecleando
+            if (now > p.until) { p.mode = 'walk'; p.y = 0; p.dir = 1; p.codeAt = now + rand(14000, 26000); p.until = now + rand(1500, 3000); }
+            draw(i, 'sit', color);
+            return;
+          }
+          if (p.mode === 'goDesk') {
+            p.dir = DESK_SEAT_X < p.x ? -1 : 1;
+            p.x += p.dir * (speed + 20) * dt;
+            if (Math.abs(p.x - DESK_SEAT_X) < 3) { p.mode = 'code'; p.until = now + rand(8000, 14000); }
+            draw(i, Math.floor(now / 140) % 2 ? 'walk1' : 'walk2', color);
+            return;
+          }
+          if (now > p.codeAt) {
+            p.mode = 'goDesk';
+            draw(i, 'stand', color);
+            return;
+          }
+        }
+        if (ball.on && ball.y < 70 && p.mode !== 'goDesk') {
           // persigue la pelotita
           const target = ball.x - PET_SIZE / 2;
           if (Math.abs(target - p.x) > 8) {
@@ -346,6 +439,17 @@ function PixelPets({ message, msgKey }: { message: string | null; msgKey: string
         }
       });
 
+      // escritorio: las líneas de código avanzan más rápido cuando el gatito programa
+      if (ctx) {
+        const working = pets[1].mode === 'code';
+        if (now - lastLine > (working ? 380 : 1800)) {
+          code.shift(); code.push(newCodeLine());
+          term.shift(); term.push(newTermLine());
+          lastLine = now;
+        }
+        drawStation(ctx, now, code, term);
+      }
+
       // el globito sigue al primer gatito
       if (bubbleEl.current) {
         const p = pets[0];
@@ -362,6 +466,7 @@ function PixelPets({ message, msgKey }: { message: string | null; msgKey: string
 
   return (
     <div className="pets" aria-hidden="true">
+      <canvas ref={stationEl} className="pet-station" width={64} height={34} />
       {PET_COLORS.map((color, i) => (
         <img
           key={color}
@@ -632,6 +737,7 @@ export default function HomePage() {
         @keyframes bubbleOut { to { opacity: 0; transform: translateY(6px); } }
         .pets { position: fixed; left: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 2px); width: 100%; height: 0; z-index: 9000; pointer-events: none; }
         .pet { position: absolute; left: 0; bottom: 0; width: 48px; height: 48px; image-rendering: pixelated; will-change: transform; }
+        .pet-station { position: absolute; left: 6px; bottom: 0; width: 128px; height: 68px; image-rendering: pixelated; }
         .pet-ball { position: absolute; left: 0; bottom: 0; width: 12px; height: 12px; border-radius: 50%; background: #00e5ff; box-shadow: 0 0 8px 2px rgba(0, 229, 255, 0.7); display: none; will-change: transform; }
         .pet-bubble { position: absolute; }
         .mascot-bubble { max-width: 210px; padding: 8px 12px; background: #fff; border: 2px solid var(--primary); border-radius: 14px 14px 4px 14px; color: var(--primary-dark); font-weight: 800; font-size: 12px; line-height: 1.35; box-shadow: var(--shadow); animation: reactionPop 0.3s ease, bubbleOut 0.4s ease 4.6s forwards; }
