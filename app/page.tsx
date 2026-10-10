@@ -173,12 +173,18 @@ function pickRandom(list: Question[], n: number): Question[] {
   return a.slice(0, Math.min(n, a.length));
 }
 
+// Stickers nuevos sin fondo: public/memes/stickers/sticker01.png ... sticker84.png
+const stickerSrcs = Array.from({ length: 84 }, (_, i) =>
+  asset(`/memes/stickers/sticker${String(i + 1).padStart(2, '0')}.png`)
+);
+
 const headerImages = [
   asset('/memes/gatito3.png'),
   asset('/memes/gatito4.png'),
   asset('/memes/gatito5.png'),
   asset('/memes/gatito6.png'),
   asset('/memes/gatito7.png'),
+  ...stickerSrcs,
 ];
 const catHeaderImg = asset('/memes/gatito7.png');
 const catImagesStep1 = [asset('/memes/1.png'), asset('/memes/2.png'), asset('/memes/5.png')];
@@ -190,6 +196,7 @@ const floatCatSrcs = [
   asset('/memes/3.jpg'),
   asset('/memes/4.png'),
   asset('/memes/5.png'),
+  ...stickerSrcs,
 ];
 
 const NOTIFY_EMAIL = 'cruzangelsaid34@gmail.com';
