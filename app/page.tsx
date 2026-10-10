@@ -173,18 +173,12 @@ function pickRandom(list: Question[], n: number): Question[] {
   return a.slice(0, Math.min(n, a.length));
 }
 
-// Stickers nuevos sin fondo: public/memes/stickers/sticker01.png ... sticker84.png
-const stickerSrcs = Array.from({ length: 84 }, (_, i) =>
-  asset(`/memes/stickers/sticker${String(i + 1).padStart(2, '0')}.png`)
-);
-
 const headerImages = [
   asset('/memes/gatito3.png'),
   asset('/memes/gatito4.png'),
   asset('/memes/gatito5.png'),
   asset('/memes/gatito6.png'),
   asset('/memes/gatito7.png'),
-  ...stickerSrcs,
 ];
 const catHeaderImg = asset('/memes/gatito7.png');
 const catImagesStep1 = [asset('/memes/1.png'), asset('/memes/2.png'), asset('/memes/5.png')];
@@ -196,7 +190,6 @@ const floatCatSrcs = [
   asset('/memes/3.jpg'),
   asset('/memes/4.png'),
   asset('/memes/5.png'),
-  ...stickerSrcs,
 ];
 
 const NOTIFY_EMAIL = 'cruzangelsaid34@gmail.com';
@@ -663,79 +656,6 @@ export default function HomePage() {
     void sendByEmail(folioValue, issued);
   }
 
-  // ---- Calendario: datos del evento a partir de la fecha y hora elegidas ----
-  function calendarEvent() {
-    if (!selectedDate || !selectedTime) return null;
-    const [hh, mm] = selectedTime.split(':').map((v) => parseInt(v, 10));
-    const start = new Date(selectedDate);
-    start.setHours(hh || 0, mm || 0, 0, 0);
-    const end = new Date(start.getTime() + 2 * 60 * 60 * 1000); // duración: 2 horas
-    const two = (v: number) => String(v).padStart(2, '0');
-    // Hora local "flotante" (sin zona): se queda a la hora que elegiste en tu calendario
-    const fmt = (d: Date) =>
-      `${d.getFullYear()}${two(d.getMonth() + 1)}${two(d.getDate())}T${two(d.getHours())}${two(d.getMinutes())}00`;
-    return {
-      title: `💜 Cita #${folio} — ¿Hacemos deploy?`,
-      details: 'Cita confirmada con gatitos 🐱 // romance.exe iniciado',
-      start: fmt(start),
-      end: fmt(end),
-    };
-  }
-
-  function downloadICS() {
-    const ev = calendarEvent();
-    if (!ev) return;
-    const esc = (t: string) => t.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
-    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const lines = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Gatito-Cita//ES',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      `UID:cita-${folio}-${ev.start}@gatito-cita`,
-      `DTSTAMP:${stamp}`,
-      `DTSTART:${ev.start}`,
-      `DTEND:${ev.end}`,
-      `SUMMARY:${esc(ev.title)}`,
-      `DESCRIPTION:${esc(ev.details)}`,
-      'BEGIN:VALARM',
-      'TRIGGER:-P1D',
-      'ACTION:DISPLAY',
-      'DESCRIPTION:Mañana es la cita 💜',
-      'END:VALARM',
-      'BEGIN:VALARM',
-      'TRIGGER:-PT1H',
-      'ACTION:DISPLAY',
-      'DESCRIPTION:La cita es en 1 hora 🐱',
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ];
-    const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'cita-confirmada.ics';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-
-  function openGoogleCalendar() {
-    const ev = calendarEvent();
-    if (!ev) return;
-    const params = new URLSearchParams({
-      action: 'TEMPLATE',
-      text: ev.title,
-      dates: `${ev.start}/${ev.end}`,
-      details: ev.details,
-    });
-    window.open(`https://calendar.google.com/calendar/render?${params.toString()}`, '_blank', 'noopener,noreferrer');
-  }
-
   async function downloadPDF() {
     const element = document.getElementById('pdf-confirmation');
     if (!element) return;
@@ -752,7 +672,6 @@ export default function HomePage() {
       });
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save('cita-confirmada.pdf');
-      downloadICS(); // junto con el PDF se descarga el evento para el calendario
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
@@ -818,6 +737,11 @@ export default function HomePage() {
         @keyframes bubbleOut { to { opacity: 0; transform: translateY(6px); } }
         .pets { position: fixed; left: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 2px); width: 100%; height: 0; z-index: 9000; pointer-events: none; }
         .pet { position: absolute; left: 0; bottom: 0; width: 48px; height: 48px; image-rendering: pixelated; will-change: transform; }
+        .site-footer { margin: 28px 0 0; padding: 18px 0 84px; text-align: center; border-top: 1px dashed rgba(124, 58, 237, 0.3); }
+        .site-footer-icons { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 8px; }
+        .site-footer-icons a, .site-footer-icons span { display: inline-flex; opacity: 0.9; }
+        .site-footer-icons a:active { transform: scale(0.92); }
+        .site-footer-code { font-family: 'Fira Code', monospace; font-size: 9px; color: var(--text-muted); }
         .pet-station { position: absolute; left: 6px; bottom: 0; width: 128px; height: 68px; image-rendering: pixelated; }
         .pet-ball { position: absolute; left: 0; bottom: 0; width: 12px; height: 12px; border-radius: 50%; background: #00e5ff; box-shadow: 0 0 8px 2px rgba(0, 229, 255, 0.7); display: none; will-change: transform; }
         .pet-bubble { position: absolute; }
@@ -1238,9 +1162,6 @@ export default function HomePage() {
             <button onClick={downloadPDF} style={{ flex: 1, background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '12px 16px', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 12px rgba(124,58,237,0.3)' }}>
               📄 Descargar PDF
             </button>
-            <button onClick={openGoogleCalendar} style={{ flex: 1, background: 'var(--accent)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '12px 16px', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 12px rgba(236,72,153,0.3)' }}>
-              📅 Google Calendar
-            </button>
           </div>
 
           <div ref={floatCatsContainer} />
@@ -1282,6 +1203,23 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+          <footer className="site-footer">
+            <div className="site-footer-icons">
+              <a href="https://github.com/Eofjsdev" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Eofjsdev" title="GitHub">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#1e1b4b" d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z" /></svg>
+              </a>
+              <span title="Next.js">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#000" /><path d="M8 7v10M8 7l8 10M16 7v6" stroke="#fff" strokeWidth="1.6" fill="none" /></svg>
+              </span>
+              <span title="React">
+                <svg viewBox="-12 -12 24 24" width="22" height="22" aria-hidden="true"><circle r="2" fill="#61dafb" /><g stroke="#61dafb" fill="none" strokeWidth="1"><ellipse rx="11" ry="4.2" /><ellipse rx="11" ry="4.2" transform="rotate(60)" /><ellipse rx="11" ry="4.2" transform="rotate(120)" /></g></svg>
+              </span>
+              <span title="TypeScript">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect width="24" height="24" rx="3" fill="#3178c6" /><text x="12" y="19" textAnchor="middle" fontSize="11" fontWeight="800" fill="#fff" fontFamily="sans-serif">TS</text></svg>
+              </span>
+            </div>
+            <p className="site-footer-code">// © 2026 Eofjs.dev · cita.deploy()</p>
+          </footer>
         </div>
       </div>
     </main>
