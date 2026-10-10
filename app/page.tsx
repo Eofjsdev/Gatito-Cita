@@ -184,13 +184,18 @@ const catHeaderImg = asset('/memes/gatito7.png');
 const catImagesStep1 = [asset('/memes/1.png'), asset('/memes/2.png'), asset('/memes/5.png')];
 const catImagesStep2 = [asset('/memes/3.jpg'), asset('/memes/4.png')];
 
-const floatCatSrcs = [
-  asset('/memes/1.png'),
-  asset('/memes/2.png'),
-  asset('/memes/3.jpg'),
-  asset('/memes/4.png'),
-  asset('/memes/5.png'),
-];
+// 84 stickers: sticker01.png ... sticker84.png
+const stickerSrcs = Array.from({ length: 84 }, (_, i) => asset(`/memes/sticker${String(i + 1).padStart(2, '0')}.png`));
+const floatCatSrcs = stickerSrcs;
+const PDF_STICKERS = 8;
+const pickStickers = (n: number) => {
+  const a = stickerSrcs.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a.slice(0, n);
+};
 
 const NOTIFY_EMAIL = 'cruzangelsaid34@gmail.com';
 
@@ -511,6 +516,7 @@ export default function HomePage() {
   const noMsgRef = useRef<HTMLParagraphElement | null>(null);
   const floatCatsContainer = useRef<HTMLDivElement | null>(null);
   const pdfContentRef = useRef<HTMLDivElement>(null);
+  const [pdfStickers, setPdfStickers] = useState<string[]>([]);
 
   const summaryItems = useMemo(() => {
     const items = questions.map((question) => ({
@@ -660,6 +666,22 @@ export default function HomePage() {
     const element = document.getElementById('pdf-confirmation');
     if (!element) return;
     try {
+      // Stickers aleatorios distintos en cada descarga: se precargan antes de capturar
+      const chosen = pickStickers(PDF_STICKERS);
+      await Promise.all(
+        chosen.map(
+          (src) =>
+            new Promise<void>((resolve) => {
+              const im = new Image();
+              im.onload = () => resolve();
+              im.onerror = () => resolve();
+              im.src = src;
+            }),
+        ),
+      );
+      setPdfStickers(chosen);
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(null))));
+      await new Promise((r) => setTimeout(r, 150));
       const canvas = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
       const imgData = canvas.toDataURL('image/png');
       const imgWidth = 148;
@@ -1188,6 +1210,14 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
+              {/* Stickers aleatorios (cambian en cada descarga) */}
+              {pdfStickers.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 10, margin: '0 0 14px' }}>
+                  {pdfStickers.map((src, i) => (
+                    <img key={`${src}-${i}`} src={src} alt="sticker" style={{ height: 56, width: 'auto', transform: `rotate(${(i % 2 === 0 ? -1 : 1) * (4 + (i * 3) % 9)}deg)` }} />
+                  ))}
+                </div>
+              )}
               {/* Fila de gatitos debajo del resumen, en su propio espacio */}
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 14, margin: '6px 0 14px' }}>
                 {['/memes/gatito0.png', '/memes/gatito4.png', '/memes/gatito7.png', '/memes/gatito6.png'].map((src) => (
