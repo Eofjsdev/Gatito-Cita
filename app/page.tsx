@@ -184,9 +184,6 @@ const catImagesStep2 = [asset('/memes/3.jpg'), asset('/memes/4.png')];
 const stickerSrcs = Array.from({ length: 84 }, (_, i) => asset(`/memes/sticker${String(i + 1).padStart(2, '0')}.png`));
 const floatCatSrcs = stickerSrcs;
 const PDF_STICKERS = 8;
-// Mensaje automático que recibe quien deja su mensaje al final (usa su nombre)
-const autoReply = (name: string) =>
-  `cita.deploy() ✅ ¡Gracias por hacer tu cita developer, ${name || 'Developer'}! 🎉\nTu mensaje llegó sin errores y te respondo muy pronto. Mientras tanto, no cierres la terminal del corazón. 🐾\n— Tu Developer favorit@ ❤️🧑‍💻`;
 // Fondo cambiante: cada cuántos milisegundos cambia y cuánto avanza el tono (ángulo áureo)
 const BG_CHANGE_MS = 6000;
 const BG_HUE_STEP = 137.50776;
@@ -532,10 +529,6 @@ export default function HomePage() {
   const [pdfStickers, setPdfStickers] = useState<string[]>([]);
   const [showCongrats, setShowCongrats] = useState(false);
   const congratsDone = useRef(false);
-  const [msgName, setMsgName] = useState('');
-  const [msgEmail, setMsgEmail] = useState('');
-  const [msgText, setMsgText] = useState('');
-  const [msgStatus, setMsgStatus] = useState<'idle' | 'sending' | 'ok' | 'error' | 'invalid'>('idle');
 
   // Fondo que cambia de color cada cierto tiempo sin repetirse:
   // el tono avanza el "ángulo áureo" (137.5°) en cada cambio, así nunca cae dos veces en el mismo color
@@ -732,36 +725,6 @@ export default function HomePage() {
     setIssuedAt(issued);
     setShowFinale(true);
     void sendByEmail(folioValue, issued);
-  }
-
-  async function sendMessage() {
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(msgEmail.trim());
-    if (!emailOk || !msgText.trim()) {
-      setMsgStatus('invalid');
-      return;
-    }
-    setMsgStatus('sending');
-    try {
-      const res = await fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          _subject: '💌 Te dejaron un mensaje después de la cita',
-          _template: 'table',
-          _captcha: 'false',
-          _autoresponse: autoReply(msgName.trim()),
-          nombre: msgName.trim() || '—',
-          email: msgEmail.trim(),
-          mensaje: msgText.trim(),
-        }),
-      });
-      if (!res.ok) throw new Error('Error al enviar');
-      setMsgStatus('ok');
-      setMsgText('');
-    } catch (error) {
-      console.error('Error enviando el mensaje final:', error);
-      setMsgStatus('error');
-    }
   }
 
   async function downloadPDF() {
@@ -1333,50 +1296,6 @@ export default function HomePage() {
             <button onClick={downloadPDF} style={{ flex: 1, background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '12px 16px', fontWeight: 800, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, boxShadow: '0 4px 12px rgba(124,58,237,0.3)' }}>
               📄 Descargar PDF
             </button>
-          </div>
-
-          {/* Mensaje final: me llega al correo y a quien escribe le llega una respuesta automática */}
-          <div style={{ display: showFinale ? 'block' : 'none', marginTop: 16, padding: 14, background: 'white', border: '2px dashed var(--border, #d9c9fb)', borderRadius: 'var(--radius-sm)', textAlign: 'left' }}>
-            <p style={{ fontWeight: 800, fontSize: 14, marginBottom: 4 }}>💌 ¿Quieres dejarme un mensaje?</p>
-            <p style={{ fontSize: 11, color: '#6b7280', marginBottom: 10 }}>Si dejas tu nombre y correo, te mando una confirmación automática con tu nombre.</p>
-            <input
-              type="text"
-              value={msgName}
-              onChange={(e) => setMsgName(e.target.value)}
-              placeholder="Tu nombre"
-              autoComplete="given-name"
-              aria-label="Tu nombre"
-              style={{ width: '100%', padding: '10px 12px', marginBottom: 8, border: '2px solid #d9c9fb', borderRadius: 10, fontFamily: 'inherit', fontSize: 13 }}
-            />
-            <input
-              type="email"
-              value={msgEmail}
-              onChange={(e) => setMsgEmail(e.target.value)}
-              placeholder="Tu correo"
-              autoComplete="email"
-              aria-label="Tu correo"
-              style={{ width: '100%', padding: '10px 12px', marginBottom: 8, border: '2px solid #d9c9fb', borderRadius: 10, fontFamily: 'inherit', fontSize: 13 }}
-            />
-            <textarea
-              value={msgText}
-              onChange={(e) => setMsgText(e.target.value)}
-              placeholder="Escribe tu mensaje…"
-              rows={3}
-              aria-label="Tu mensaje"
-              style={{ width: '100%', padding: '10px 12px', marginBottom: 8, border: '2px solid #d9c9fb', borderRadius: 10, fontFamily: 'inherit', fontSize: 13, resize: 'vertical' }}
-            />
-            <button
-              onClick={sendMessage}
-              disabled={msgStatus === 'sending'}
-              style={{ width: '100%', background: 'linear-gradient(135deg, var(--accent), #db2777)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', padding: '12px 16px', fontWeight: 800, fontSize: 13, cursor: 'pointer', opacity: msgStatus === 'sending' ? 0.6 : 1 }}
-            >
-              {msgStatus === 'sending' ? 'Enviando…' : 'Enviar mensaje'}
-            </button>
-            <p role="status" aria-live="polite" style={{ marginTop: 8, fontSize: 12, minHeight: 16, color: msgStatus === 'ok' ? '#17784a' : '#b42343' }}>
-              {msgStatus === 'invalid' && 'Escribe un correo válido y tu mensaje.'}
-              {msgStatus === 'error' && 'No se pudo enviar. Inténtalo de nuevo.'}
-              {msgStatus === 'ok' && '¡Mensaje enviado! Revisa tu correo, te mandé una confirmación. 💜'}
-            </p>
           </div>
 
           <div ref={floatCatsContainer} />
