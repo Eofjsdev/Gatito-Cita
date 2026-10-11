@@ -1,3 +1,10 @@
+/* Permite que el fondo cambie de color con una transición suave */
+@property --bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f7f3ff;
+}
+
 :root {
   --bg: #f7f3ff;
   --card: #ffffff;
@@ -15,6 +22,7 @@
   --shadow-lg: 0 8px 40px rgba(124,58,237,0.18);
   --radius: 20px;
   --radius-sm: 12px;
+  transition: --bg 3s ease-in-out;
 }
 
 * {

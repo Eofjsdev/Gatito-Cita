@@ -184,6 +184,9 @@ const catImagesStep2 = [asset('/memes/3.jpg'), asset('/memes/4.png')];
 const stickerSrcs = Array.from({ length: 84 }, (_, i) => asset(`/memes/sticker${String(i + 1).padStart(2, '0')}.png`));
 const floatCatSrcs = stickerSrcs;
 const PDF_STICKERS = 8;
+// Fondo cambiante: cada cuántos milisegundos cambia y cuánto avanza el tono (ángulo áureo)
+const BG_CHANGE_MS = 6000;
+const BG_HUE_STEP = 137.50776;
 // Posiciones de los stickers en el PDF: esquinas, laterales y parte de abajo
 const PDF_STICKER_SPOTS: CSSProperties[] = [
   { top: 8, left: 14, transform: 'rotate(-10deg)' },
@@ -526,6 +529,19 @@ export default function HomePage() {
   const [pdfStickers, setPdfStickers] = useState<string[]>([]);
   const [showCongrats, setShowCongrats] = useState(false);
   const congratsDone = useRef(false);
+
+  // Fondo que cambia de color cada cierto tiempo sin repetirse:
+  // el tono avanza el "ángulo áureo" (137.5°) en cada cambio, así nunca cae dos veces en el mismo color
+  useEffect(() => {
+    let hue = Math.random() * 360;
+    const apply = () => {
+      hue = (hue + BG_HUE_STEP) % 360;
+      document.documentElement.style.setProperty('--bg', `hsl(${hue.toFixed(2)}, 90%, 95%)`);
+    };
+    apply();
+    const id = setInterval(apply, BG_CHANGE_MS);
+    return () => clearInterval(id);
+  }, []);
 
   const summaryItems = useMemo(() => {
     const items = questions.map((question) => ({
