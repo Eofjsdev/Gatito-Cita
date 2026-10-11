@@ -226,6 +226,128 @@ const headerImages = [
   asset('/memes/gatito6.png'),
   asset('/memes/gatito7.png'),
 ];
+// Recorte de los espacios transparentes de TODAS las imágenes de /memes.
+// Cada fila: [ancho, alto, izquierda, arriba, derecha, abajo] del rectángulo útil del dibujo, en píxeles.
+const MEME_CROPS: Record<string, [number, number, number, number, number, number]> = {
+  '1.png': [529, 472, 22, 104, 529, 472],
+  '2.png': [476, 424, 0, 66, 476, 424],
+  '3.jpg': [300, 168, 0, 0, 300, 168],
+  '4.png': [376, 663, 27, 128, 346, 620],
+  '5.png': [489, 510, 148, 69, 489, 510],
+  'gatito0.png': [480, 480, 35, 17, 480, 480],
+  'gatito1.png': [340, 607, 0, 0, 340, 449],
+  'gatito2.png': [606, 606, 53, 0, 550, 606],
+  'gatito3.png': [608, 606, 0, 98, 608, 490],
+  'gatito4.png': [604, 607, 1, 96, 604, 605],
+  'gatito5.png': [632, 607, 46, 32, 583, 607],
+  'gatito6.png': [607, 607, 1, 10, 558, 607],
+  'gatito7.png': [341, 607, 46, 187, 286, 476],
+  'sticker01.png': [166, 129, 2, 2, 163, 126],
+  'sticker02.png': [108, 193, 2, 2, 106, 191],
+  'sticker03.png': [134, 175, 2, 3, 132, 173],
+  'sticker04.png': [141, 181, 8, 3, 139, 179],
+  'sticker05.png': [164, 160, 2, 2, 162, 158],
+  'sticker06.png': [114, 237, 3, 2, 112, 235],
+  'sticker07.png': [164, 163, 2, 2, 162, 160],
+  'sticker08.png': [176, 161, 3, 3, 174, 159],
+  'sticker09.png': [167, 132, 2, 3, 165, 130],
+  'sticker10.png': [115, 236, 2, 3, 113, 234],
+  'sticker11.png': [142, 146, 2, 2, 140, 144],
+  'sticker12.png': [140, 127, 2, 3, 137, 125],
+  'sticker13.png': [160, 184, 2, 2, 158, 182],
+  'sticker14.png': [130, 186, 3, 2, 128, 184],
+  'sticker15.png': [179, 146, 3, 2, 176, 143],
+  'sticker16.png': [171, 160, 2, 2, 169, 158],
+  'sticker17.png': [140, 164, 2, 3, 138, 162],
+  'sticker18.png': [166, 190, 2, 2, 164, 188],
+  'sticker19.png': [106, 131, 3, 2, 104, 128],
+  'sticker20.png': [196, 221, 3, 3, 194, 219],
+  'sticker21.png': [137, 204, 2, 2, 135, 202],
+  'sticker22.png': [97, 121, 2, 3, 95, 119],
+  'sticker23.png': [159, 150, 2, 3, 157, 147],
+  'sticker24.png': [159, 227, 2, 2, 157, 225],
+  'sticker25.png': [156, 184, 3, 3, 154, 181],
+  'sticker26.png': [153, 194, 2, 3, 151, 192],
+  'sticker27.png': [192, 160, 2, 2, 190, 158],
+  'sticker28.png': [185, 213, 2, 3, 183, 210],
+  'sticker29.png': [155, 235, 2, 2, 153, 232],
+  'sticker30.png': [185, 215, 2, 2, 183, 213],
+  'sticker31.png': [178, 187, 2, 3, 176, 185],
+  'sticker32.png': [211, 188, 2, 3, 209, 186],
+  'sticker33.png': [158, 259, 2, 2, 156, 257],
+  'sticker34.png': [138, 268, 2, 3, 136, 266],
+  'sticker35.png': [195, 232, 2, 3, 192, 229],
+  'sticker36.png': [157, 156, 2, 2, 155, 154],
+  'sticker37.png': [178, 173, 3, 3, 176, 170],
+  'sticker38.png': [161, 164, 2, 2, 159, 162],
+  'sticker39.png': [101, 192, 2, 2, 99, 189],
+  'sticker40.png': [255, 230, 2, 2, 253, 228],
+  'sticker41.png': [206, 179, 2, 2, 204, 176],
+  'sticker42.png': [159, 231, 2, 2, 157, 229],
+  'sticker43.png': [183, 204, 3, 2, 180, 202],
+  'sticker44.png': [242, 222, 2, 3, 240, 219],
+  'sticker45.png': [111, 249, 2, 3, 109, 247],
+  'sticker46.png': [227, 236, 2, 3, 225, 234],
+  'sticker47.png': [222, 229, 2, 2, 220, 227],
+  'sticker48.png': [148, 239, 2, 2, 146, 236],
+  'sticker49.png': [142, 139, 2, 2, 140, 136],
+  'sticker50.png': [150, 147, 2, 2, 148, 145],
+  'sticker51.png': [160, 172, 2, 3, 158, 169],
+  'sticker52.png': [124, 119, 2, 2, 122, 117],
+  'sticker53.png': [163, 201, 2, 2, 161, 199],
+  'sticker54.png': [103, 194, 2, 2, 101, 192],
+  'sticker55.png': [136, 158, 2, 2, 134, 155],
+  'sticker56.png': [140, 150, 2, 3, 138, 148],
+  'sticker57.png': [161, 126, 2, 3, 159, 124],
+  'sticker58.png': [126, 120, 2, 2, 124, 117],
+  'sticker59.png': [131, 170, 3, 2, 129, 168],
+  'sticker60.png': [159, 142, 2, 3, 157, 140],
+  'sticker61.png': [164, 203, 2, 2, 162, 200],
+  'sticker62.png': [187, 180, 2, 2, 185, 178],
+  'sticker63.png': [160, 152, 2, 2, 158, 149],
+  'sticker64.png': [283, 185, 0, 0, 283, 185],
+  'sticker65.png': [185, 300, 1, 2, 184, 299],
+  'sticker66.png': [163, 166, 2, 2, 161, 163],
+  'sticker67.png': [194, 221, 2, 2, 192, 219],
+  'sticker68.png': [250, 300, 1, 2, 249, 299],
+  'sticker69.png': [132, 300, 1, 1, 131, 299],
+  'sticker70.png': [215, 247, 2, 2, 213, 245],
+  'sticker71.png': [300, 266, 0, 0, 300, 266],
+  'sticker72.png': [231, 294, 2, 2, 229, 292],
+  'sticker73.png': [201, 300, 1, 1, 200, 299],
+  'sticker74.png': [153, 223, 2, 2, 151, 221],
+  'sticker75.png': [169, 209, 2, 2, 166, 207],
+  'sticker76.png': [183, 251, 2, 2, 180, 249],
+  'sticker77.png': [141, 190, 2, 2, 139, 188],
+  'sticker78.png': [175, 285, 2, 2, 173, 283],
+  'sticker79.png': [150, 202, 2, 2, 148, 199],
+  'sticker80.png': [182, 212, 3, 3, 179, 210],
+  'sticker81.png': [212, 205, 2, 3, 210, 202],
+  'sticker82.png': [209, 186, 2, 2, 206, 184],
+  'sticker83.png': [257, 246, 2, 2, 255, 244],
+  'sticker84.png': [181, 220, 2, 2, 179, 218],
+};
+
+// Muestra la imagen sin su margen transparente, ajustada a un ancho/alto máximos.
+function TightImg({ src, alt = '', maxWidth, maxHeight, style }: { key?: string | number; src: string; alt?: string; maxWidth?: number; maxHeight?: number; style?: CSSProperties }) {
+  const name = src.split('/').pop() ?? '';
+  const c = MEME_CROPS[name];
+  if (!c) return <img src={src} alt={alt} style={{ maxWidth, maxHeight, ...style }} />;
+  const [w, , l, t, r, b] = c;
+  const cw = r - l;
+  const ch = b - t;
+  const scale = Math.min((maxWidth ?? Infinity) / cw, (maxHeight ?? Infinity) / ch, 1);
+  return (
+    <div style={{ position: 'relative', display: 'block', flexShrink: 0, overflow: 'hidden', width: cw * scale, height: ch * scale, ...style }}>
+      <img
+        src={src}
+        alt={alt}
+        style={{ position: 'absolute', maxWidth: 'none', height: 'auto', width: w * scale, left: -l * scale, top: -t * scale }}
+      />
+    </div>
+  );
+}
+
 const catHeaderImg = asset('/memes/gatito7.png');
 const catImagesStep1 = [asset('/memes/1.png'), asset('/memes/2.png'), asset('/memes/5.png')];
 const catImagesStep2 = [asset('/memes/3.jpg'), asset('/memes/4.png')];
@@ -940,7 +1062,7 @@ export default function HomePage() {
       <PixelPets message={mascotMsg} msgKey={String(currentStep)} />
       <div style={{ width: '100%' }}>
         <div className="header" style={{ textAlign: 'center', marginBottom: 20, animation: 'fadeDown 0.6s ease' }}>
-          <img src={asset('/memes/gatito1.png')} alt="gatito1" style={{ width: 100, height: 'auto', borderRadius: 16, display: 'block', margin: '0 auto 12px', filter: 'drop-shadow(0 0 20px rgba(192, 132, 252, 0.5))' }} />
+          <TightImg src={asset('/memes/gatito1.png')} alt="gatito1" maxWidth={100} maxHeight={150} style={{ borderRadius: 16, margin: '0 auto 12px', filter: 'drop-shadow(0 0 20px rgba(192, 132, 252, 0.5))' }} />
           <h1 style={{ fontSize: 22, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', lineHeight: 1.2 }}>
             ¿Hacemos deploy de una cita?
           </h1>
@@ -952,7 +1074,7 @@ export default function HomePage() {
         <div className={`step ${currentStep === 0 ? 'active' : ''}`} style={{ display: currentStep === 0 ? 'block' : 'none', animation: 'slideUp 0.4s cubic-bezier(.34,1.56,.64,1)' }} id="s0">
           <div className="plea-card" style={{ background: 'var(--primary-light)', border: '2px solid rgba(124,58,237,0.2)', borderRadius: 'var(--radius)', padding: '14px 16px', display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
             <span className="plea-emoji" style={{ flexShrink: 0 }}>
-              <img src={asset('/memes/gatito2.png')} alt="Emoji gato" style={{ width: 56, height: 56, borderRadius: 12 }} />
+              <TightImg src={asset('/memes/gatito2.png')} alt="Emoji gato" maxWidth={56} maxHeight={56} style={{ borderRadius: 12 }} />
             </span>
             <div className="plea-text" style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary-dark)', lineHeight: 1.4 }}>
               Antes de responder... ¡responde esto primero! 🥺
@@ -977,7 +1099,7 @@ export default function HomePage() {
           <div className="q-card" style={{ background: 'var(--card)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', padding: 16, marginBottom: 16, border: '1px solid var(--border)', textAlign: 'center' }}>
             <div style={{ display: 'flex', gap: 6, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 12 }}>
               {catImagesStep1.map((src, index) => (
-                <img key={index} src={src} alt={`Imagen ${index + 1}`} style={{ width: '30%', maxWidth: 90, height: 'auto', borderRadius: 12, animation: 'float 3s ease-in-out infinite', animationDelay: `${index * 0.5}s` }} />
+                <TightImg key={index} src={src} alt={`Imagen ${index + 1}`} maxWidth={90} maxHeight={110} style={{ borderRadius: 12, animation: 'float 3s ease-in-out infinite', animationDelay: `${index * 0.5}s` }} />
               ))}
             </div>
             <div className="q-text" style={{ fontSize: 18, fontWeight: 800, color: 'var(--text)', lineHeight: 1.4, marginBottom: 16 }}>
@@ -1053,8 +1175,8 @@ export default function HomePage() {
         <div className="step" style={{ display: currentStep === 2 ? 'block' : 'none' }} id="s2">
           <div className="q-card" style={{ background: 'var(--card)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', padding: 16, marginBottom: 16, border: '1px solid var(--border)', textAlign: 'center' }}>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 12 }}>
-              <img src={catImagesStep2[0]} alt="Corgi" style={{ marginTop: 10, height: 80, width: 'auto', borderRadius: 12, animation: 'pulse 2s ease-in-out infinite' }} />
-              <img src={catImagesStep2[1]} alt="Gatito emocionado" style={{ marginTop: -10, height: 120, width: 90, borderRadius: 12, animation: 'pulse 2s ease-in-out infinite', animationDelay: '0.5s' }} />
+              <TightImg src={catImagesStep2[0]} alt="Corgi" maxHeight={80} style={{ marginTop: 10, borderRadius: 12, animation: 'pulse 2s ease-in-out infinite' }} />
+              <TightImg src={catImagesStep2[1]} alt="Gatito emocionado" maxWidth={90} maxHeight={120} style={{ marginTop: -10, borderRadius: 12, animation: 'pulse 2s ease-in-out infinite', animationDelay: '0.5s' }} />
             </div>
             <span className="q-tag" style={{ fontFamily: 'Fira Code, monospace', fontSize: 10, background: 'var(--primary-light)', color: 'var(--primary)', padding: '3px 8px', borderRadius: 100, display: 'inline-block', marginBottom: 10, fontWeight: 500 }}>
               // módulo: cron_job.schedule
@@ -1228,7 +1350,7 @@ export default function HomePage() {
                 <div className="progress-fill" style={{ height: '100%', background: 'linear-gradient(90deg, var(--primary), var(--accent))', borderRadius: 100, transition: 'width 0.5s cubic-bezier(.34,1.56,.64,1)', width: progress }} />
               </div>
               <div style={{ textAlign: 'center', margin: '8px 0' }}>
-                <img src={headerImages[index % headerImages.length]} alt="Decoración" style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: 200, height: 'auto' }} />
+                <TightImg src={headerImages[index % headerImages.length]} alt="Decoración" maxWidth={200} maxHeight={175} style={{ margin: '0 auto' }} />
               </div>
               <div className="q-card" style={{ background: 'var(--card)', borderRadius: 'var(--radius)', boxShadow: 'var(--shadow)', padding: 16, marginBottom: 12, border: '1px solid var(--border)' }}>
                 <span className="q-tag" style={{ fontFamily: 'Fira Code, monospace', fontSize: 10, background: 'var(--primary-light)', color: 'var(--primary)', padding: '3px 8px', borderRadius: 100, display: 'inline-block', marginBottom: 8, fontWeight: 500 }}>
@@ -1287,7 +1409,7 @@ export default function HomePage() {
         <div className="step" style={{ display: currentStep === SUMMARY_STEP ? 'block' : 'none' }} id={`s${SUMMARY_STEP}`}>
           <div className="summary-header" style={{ textAlign: 'center', marginBottom: 16 }}>
             <span className="big-cat" style={{ display: 'block', animation: 'pulse 2s ease-in-out infinite', marginBottom: 10 }}>
-              <img src={catHeaderImg} alt="Gato grande" style={{ display: 'block', margin: '0 auto', width: 120, height: 120, objectFit: 'contain' }} />
+              <TightImg src={catHeaderImg} alt="Gato grande" maxWidth={120} maxHeight={120} style={{ margin: '0 auto' }} />
             </span>
             <h2 style={{ fontSize: 20, fontWeight: 900, background: 'linear-gradient(135deg, var(--primary), var(--accent))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
               Resumen de compatibilidad
@@ -1312,7 +1434,7 @@ export default function HomePage() {
 
           <div className="q-card" style={{ border: '2px solid var(--accent)', textAlign: 'center', padding: 16, borderRadius: 'var(--radius)', background: 'var(--card)', boxShadow: 'var(--shadow)' }}>
             <span style={{ display: 'block', marginBottom: 8 }}>
-              <img src={asset('/memes/gatito0.png')} alt="Pregunta final" style={{ display: 'block', margin: '0 auto', width: 80, height: 80, objectFit: 'contain' }} />
+              <TightImg src={asset('/memes/gatito0.png')} alt="Pregunta final" maxWidth={80} maxHeight={80} style={{ margin: '0 auto' }} />
             </span>
             <div className="q-text" style={{ fontSize: 18, lineHeight: 1.4, fontWeight: 800, color: 'var(--text)' }}>
               Entonces... ¿saldrías conmigo?
@@ -1328,9 +1450,9 @@ export default function HomePage() {
 
           <div className="finale" id="fmsg" style={{ display: showFinale ? 'block' : 'none', textAlign: 'center', padding: 16, background: 'var(--green-light)', border: '2px solid rgba(16,185,129,0.3)', borderRadius: 'var(--radius)', animation: 'pop 0.5s cubic-bezier(.34,1.56,.64,1)', marginTop: 12 }}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-              <img src={asset('/memes/gatito0.png')} alt="gatito0" style={{ display: 'block', width: 50, height: 50, objectFit: 'contain' }} />
-              <img src={asset('/memes/gatito1.png')} alt="gatito1" style={{ display: 'block', width: 80, height: 80, objectFit: 'contain' }} />
-              <img src={asset('/memes/gatito0.png')} alt="gatito0" style={{ display: 'block', width: 50, height: 50, objectFit: 'contain' }} />
+              <TightImg src={asset('/memes/gatito0.png')} alt="gatito0" maxWidth={50} maxHeight={50} />
+              <TightImg src={asset('/memes/gatito1.png')} alt="gatito1" maxWidth={80} maxHeight={80} />
+              <TightImg src={asset('/memes/gatito0.png')} alt="gatito0" maxWidth={50} maxHeight={50} />
             </div>
 
             <h3 style={{ fontSize: 18, fontWeight: 900, color: 'var(--green)', marginBottom: 6 }}>
