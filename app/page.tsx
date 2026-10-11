@@ -184,6 +184,9 @@ const catImagesStep2 = [asset('/memes/3.jpg'), asset('/memes/4.png')];
 const stickerSrcs = Array.from({ length: 84 }, (_, i) => asset(`/memes/sticker${String(i + 1).padStart(2, '0')}.png`));
 const floatCatSrcs = stickerSrcs;
 const PDF_STICKERS = 8;
+// Gatito que sigue el cursor / el dedo
+const FOLLOWER_SRC = asset('/memes/gatito0.png');
+const FOLLOWER_SIZE = 46;
 // Fondo cambiante: cada cuántos milisegundos cambia y cuánto avanza el tono (ángulo áureo)
 const BG_CHANGE_MS = 6000;
 const BG_HUE_STEP = 137.50776;
@@ -541,6 +544,78 @@ export default function HomePage() {
     apply();
     const id = setInterval(apply, BG_CHANGE_MS);
     return () => clearInterval(id);
+  }, []);
+
+  // Huellitas al tocar + gatito pequeño que persigue el cursor o el toque
+  useEffect(() => {
+    const cat = document.createElement('img');
+    cat.src = FOLLOWER_SRC;
+    cat.alt = '';
+    cat.setAttribute('aria-hidden', 'true');
+    Object.assign(cat.style, {
+      position: 'fixed',
+      left: '0px',
+      top: '0px',
+      height: `${FOLLOWER_SIZE}px`,
+      width: 'auto',
+      pointerEvents: 'none',
+      zIndex: '9997',
+      opacity: '0',
+      transition: 'opacity 0.3s',
+      willChange: 'transform',
+    });
+    document.body.appendChild(cat);
+
+    let targetX = 0;
+    let targetY = 0;
+    let x = 0;
+    let y = 0;
+    let started = false;
+    let facing = 1;
+    let raf = 0;
+
+    const onMove = (e: PointerEvent) => {
+      targetX = e.clientX + 18;
+      targetY = e.clientY + 18;
+      if (!started) {
+        started = true;
+        x = targetX;
+        y = targetY;
+        cat.style.opacity = '1';
+      }
+    };
+
+    const onDown = (e: PointerEvent) => {
+      onMove(e);
+      const paw = document.createElement('span');
+      paw.className = 'paw-print';
+      paw.textContent = '🐾';
+      paw.style.left = `${e.clientX}px`;
+      paw.style.top = `${e.clientY}px`;
+      paw.style.setProperty('--paw-rot', `${Math.round(Math.random() * 80 - 40)}deg`);
+      document.body.appendChild(paw);
+      setTimeout(() => paw.remove(), 1400);
+    };
+
+    const tick = () => {
+      const dx = targetX - x;
+      const dy = targetY - y;
+      x += dx * 0.12;
+      y += dy * 0.12;
+      if (Math.abs(dx) > 2) facing = dx > 0 ? 1 : -1;
+      cat.style.transform = `translate(${x}px, ${y}px) scaleX(${facing})`;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerdown', onDown);
+      cat.remove();
+    };
   }, []);
 
   const summaryItems = useMemo(() => {

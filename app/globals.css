@@ -142,3 +142,20 @@ img {
     height: 70px;
   }
 }
+
+/* Huellitas que aparecen al tocar y se desvanecen */
+.paw-print {
+  position: fixed;
+  z-index: 9998;
+  pointer-events: none;
+  font-size: 30px;
+  line-height: 1;
+  user-select: none;
+  animation: pawFade 1.3s ease-out forwards;
+}
+
+@keyframes pawFade {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(var(--paw-rot, 0deg)); }
+  15% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1) rotate(var(--paw-rot, 0deg)); }
+  100% { opacity: 0; transform: translate(-50%, -62%) scale(1) rotate(var(--paw-rot, 0deg)); }
+}
