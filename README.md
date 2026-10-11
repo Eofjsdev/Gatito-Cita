@@ -1,6 +1,6 @@
 # 🐱 ¿Hacemos deploy de una cita? — Cita con Gatitos
 
-> _Una invitación interactiva para pedir una cita de forma original: fecha y hora, un banco de 100 preguntas de programador, gatitos pixel que te acompañan, PDF de la cita confirmada con stickers, fiesta de stickers al terminar y aviso por correo._
+> _Una invitación interactiva para pedir una cita de forma original: fecha y hora, un banco de 150 preguntas de programador, gatitos pixel que te acompañan, PDF de la cita confirmada con stickers, fiesta de stickers al terminar y aviso por correo._
 
 **Hecho por [Ángel Said](https://github.com/Eofjsdev)** 💜 
 
@@ -25,7 +25,7 @@ Es una app 100 % estática: no necesita servidor ni base de datos y se publica g
 
 ### 🎮 Experiencia de usuario
 - **Botón "No" escapista:** se mueve solo cuando intentas presionarlo, se va haciendo más chico y el botón "Sí" crece con cada intento (hasta 5 niveles).
-- **Banco de 100 preguntas** de programador, en **orden aleatorio** en cada cita. Se puede limitar cuántas salen con `QUESTIONS_PER_DATE`.
+- **Banco de 150 preguntas** de programador (lenguajes, frameworks, herramientas y humor dev), en **orden aleatorio** en cada cita. Se puede limitar cuántas salen con `QUESTIONS_PER_DATE`.
 - **Validación en cada paso:** hay que responder antes de avanzar.
 - **Reacción del gatito** después de cada respuesta ("¡Miau! Esa me gustó 😻", "Anotado en mi base de datos 🐾"…).
 - **Mascota con mensajes de ánimo:** al empezar, en el 25 %, 50 %, 75 % y 90 % del camino, en la última pregunta y cada cierto número de preguntas.
@@ -77,13 +77,13 @@ Estas constantes están al inicio de `app/page.tsx`:
 | Constante | Para qué sirve |
 |-----------|----------------|
 | `NOTIFY_EMAIL` | Correo que recibe las respuestas (vía FormSubmit) |
-| `QUESTIONS_PER_DATE` | Cuántas preguntas salen en cada cita (el banco tiene 100) |
+| `QUESTIONS_PER_DATE` | Cuántas preguntas salen en cada cita (el banco tiene 150) |
 | `PDF_STICKERS` | Cuántos stickers aleatorios salen en el PDF (por defecto 8) |
 | `PDF_STICKER_SPOTS` | Posiciones de los stickers en la hoja del PDF |
 | `BG_CHANGE_MS` | Cada cuántos milisegundos cambia el color de fondo (por defecto 6000) |
 | `BG_HUE_STEP` | Cuánto avanza el tono en cada cambio de fondo |
 
-Para probar el final sin contestar 100 preguntas, baja `QUESTIONS_PER_DATE` a 3 mientras pruebas.
+Para probar el final sin contestar 150 preguntas, baja `QUESTIONS_PER_DATE` a 3 mientras pruebas.
 
 Para cambiar o agregar preguntas, edita el arreglo `QUESTION_BANK`. Cada una tiene `key`, `icon`, `tag`, `text` y `options`.
 
