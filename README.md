@@ -107,8 +107,8 @@ También se puede publicar en **Vercel** (el proyecto incluye `vercel.json`).
 Requisitos: Node.js 18.17 o superior.
 
 ```bash
-git clone https://github.com/Eofjsdev/Gatito-Cita.git
-cd Gatito-Cita
+git clone https://github.com/Eofjsdev/Gatitos-Cita-Dev.git
+cd Gatitos-Cita-Dev
 npm install
 npm run dev
 ```
