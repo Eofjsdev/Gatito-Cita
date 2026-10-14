@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 };
 
 /* ===== Badge "Pregunta a la IA" (solo agrega un bloque al final de la página) ===== */
-const PRODUCT = 'Gatito-Cita';
+const PRODUCT = 'Gatitos Cita Dev';
 const CREATOR = 'Ángel Said';
 const HANDLE = 'Eofjs.dev';
 
